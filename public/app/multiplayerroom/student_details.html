@@ -1,0 +1,52 @@
+<div class="form-group row ng-scope">
+    <label for="room_name_text_id" class="col-sm-2 control-label text-right">Room
+        name</label>
+    <div class="col-sm-8">
+        <span> </span>
+        <input type="text" class="form-control " ng-model="stData.room_name" data-rule-required="true"
+            data-msg-required="" data-rule-maxlength="255" data-msg-maxlength="" name="room_name" id="room_name_text_id"
+            value="" placeholder="Enter Room name">
+    </div>
+</div>
+
+<div class="form-group row ng-scope">
+    <label for="lesson_name_text_id" class="col-sm-2 control-label text-right">Lesson Block</label>
+    <div class="col-sm-8">
+        <select class="custom-select custom-select-sm select2" id="fragment_id" name="fragment_id" data-rule-selectreq="true"
+            ng-model="stData.fragment_id" name="fragment_id">
+            <option value="<% cl.fragment_id %>" ng-repeat="cl in fragmentList">
+                <% cl.fragment_name %>
+            </option>
+        </select>
+    </div>
+</div>
+
+
+<div class="form-group row ng-scope">
+    <label for="lesson_name_text_id" class="col-sm-2 control-label text-right">Class</label>
+    <div class="col-sm-8">
+        <select class="custom-select custom-select-sm" id="class_id" name="class_id" data-rule-selectreq="true"
+            ng-model="stData.class_id" ng-change="classChange()" name="class_id">
+            <option value="<% cl.class_id %>" ng-repeat="cl in classList">
+                <% cl.class_name %>
+            </option>
+        </select>
+    </div>
+</div>
+
+
+<div class="form-group row ng-scope mt-3" ng-if="stData.class_id">
+    <label for="lesson_name_text_id" class="col-sm-2 mr-0 control-label text-right">Student</label>
+    <div class="col-sm-8 ml-0">
+        <div class="row">
+            <div class="col-md-12 ml-0">
+                <input type="checkbox" class="mr-1" ng-click="toggleAll()" id="isAllSelected" ng-model="isAllSelected">
+                Select All
+            </div>
+            <div class="col-md-4 ml-0" ng-if="stData.class_id == option.class_id" ng-repeat="option in studentList">
+                <input type="checkbox" name='student_ids[]' class="mr-1" ng-model="option.selected" ng-change="optionToggled()" data-id="<%option.id%>" value="<%option.id%>">
+                <% option.user_name %>
+            </div>
+        </div>
+    </div>
+</div>

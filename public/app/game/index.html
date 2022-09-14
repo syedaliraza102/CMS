@@ -1,0 +1,125 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_index_class">
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content" ng-if="mdata.flag == 1">
+        <!-- Default card -->
+        <div class="card">
+
+            <div class="card-header with-border">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="mb-0 font-weight-semibold" style="margin-top: 2px !important;"> <% mtitle %> </h3>
+                    </div>
+                    <div class="col-md-9 text-right">
+                        <!-- <div class="btn-group" ng-if="mdata.can_bulk == true">
+                            <button type="button" class="btn btn-sm btn-info">Action</button>
+                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="bulk_action($event)" ng-repeat="bk in mdata.bulkactions"
+                                        data-slug="<% bk.slug %>"><% bk.title %></a>
+                                </li>
+                            </ul>
+                        </div> -->
+                        <!-- <a ng-if="mdata.can_export == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Export
+                        </a> -->
+                        <!-- <a ng-click="apply_filter()" class="btn btn-sm btn-success text-white"> Apply Filters</a> -->
+                        <a ng-if="mdata.can_add == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Add
+                            <%  mtitle %>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- <div class="card-tools">
+                    <div style="display: inline-block;">
+
+
+                    </div>
+                </div> -->
+            </div>
+            <div class="card-header with-border filter_control_wrapper">
+                <div class="row">
+                    <div class="col-md-11" style="flex: 0 0 calc(100% - 80px);">
+                        <div class="row" compile="mdata.filtersinputs">
+
+                        </div>
+                    </div>
+                    <div class="col-md-1 pl-0 pr-0 text-right" style="flex: 0 0 80px !important;max-width: 20%;">
+                        <a ng-click="apply_filter()" class="btn font-14 btn-success text-white"><i
+                                class="dripicons-experiment"></i></a>
+                        <a ng-click="remove_filter()" class="btn font-14 btn-danger text-white">
+                            <i class=" dripicons-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table crud_table table-sm">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="cols in mdata.gridCol" class="<%  cols.sclass %>" compile="cols.title"
+                                ng-click="sort_col($event)" data-col='<% cols.slug %>'></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="mdata.griddata.data.length != 0">
+                        <tr ng-repeat="rows in mdata.griddata.data">
+                            <td ng-repeat="cols in mdata.gridCol" compile="rows[cols.slug]"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="mdata.griddata.data.length == 0">
+                        <tr class="text-center">
+                            <td colspan="<% mdata.gridCol.length %>"> <strong> No record Found </strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- <a href="" ng-click=""></a> -->
+            <!-- /.card-body -->
+            <div class=" card-footer index_footer">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group perpageItems mb-0">
+                            <label>Showing </label>
+                            <select ng-model="perpageItems"
+                                class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                ng-change="itemsperchange(perpageItems)"
+                                ng-options="pageperdata for pageperdata in pageper">
+                            </select> entries
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right" style="line-height: 30px;"> Showing <% mdata.griddata.from %> to
+                        <% mdata.griddata.to %> of
+                        <% mdata.griddata.total%> entries
+                    </div>
+                    <div class="col-md-6 pull-right text-right">
+
+                        <ul uib-pagination total-items="totalItems" ng-model="pageNo" style="float: right;"
+                            ng-change="pageChanged(pageNo)" max-size="maxSize" class="pagination float-right mb-0"
+                            boundary-links="true" items-per-page="perpageItems">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

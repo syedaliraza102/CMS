@@ -1,0 +1,86 @@
+<style>
+    .ctab .nav-link {
+        cursor: pointer;
+    }
+</style>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_add_class">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Add <% mtitle %>
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"><% mtitle %></li>
+        </ol>
+    </section> -->
+
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content">
+        <form id="addform" method="post" action="" enctype="multipart/form-data">
+            <!-- Default card -->
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 class="card-title float-left mb-0 mt-1">Add <% mtitle %> </h3>
+                    <!-- <div class="card-tools float-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>" ui-sref-active="active"> Back to list
+                        </a>
+                        <button type="button" class="btn btn-sm btn-success" ng-click="saveformdata($event)"
+                            ng-model="saveform">Save
+                            <% mtitle %> </button>
+                    </div> -->
+                </div>
+                <div class="card-body">
+
+                    <input type="hidden" ng-model="pk" value="<% mpk_val %>" name="<% mpk %>">
+                    <input type="hidden" ng-model="_token" value="<% csrf_token %>" name="_token">
+                    <div compile="mform"></div>
+                    <ul class="nav nav-tabs nav-bordered mb-2 ctab ">
+                        <li class="nav-item">
+                            <a ng-click="setTab('vocabulary')"
+                                class=" nav-link <% activeTab == 'vocabulary' ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Vocabulary Management</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane <% activeTab == 'vocabulary' ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/package/tabs/vocabulary.html'"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="card-tools pull-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>" ui-sref-active="active"> Back to list
+                        </a>
+                        <button type="button" class="btn btn-sm btn-success" ng-click="saveformdata($event)"
+                            ng-model="saveform">Save
+                            <% mtitle %> </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

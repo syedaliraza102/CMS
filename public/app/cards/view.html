@@ -1,0 +1,46 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_view_class">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Add <% mtitle %>
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"><% mtitle %></li>
+        </ol>
+    </section> -->
+
+    <!-- Main content -->
+    <section class="content">
+        <form id="viewform" method="post" action="" enctype="multipart/form-data">
+            <!-- Default card -->
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 class="card-title float-left mb-0 mt-1"><% mtitle %> #<% mpk_val %> </h3>
+                    <div class="card-tools float-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>" ui-sref-active="active"> Back to list
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" ng-model="pk" value="<% mpk_val %>" name="<% mpk %>">
+                    <input type="hidden" ng-model="_token" value="<% csrf_token %>" name="_token">
+                    <div compile="mview"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="card-tools pull-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>" ui-sref-active="active"> Back to list
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

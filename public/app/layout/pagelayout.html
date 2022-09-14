@@ -1,0 +1,44 @@
+<!-- <div class="wrapper" ng-controller="DashboardController">
+    <div class="page_loader" ng-model="page_loader" ng-if="page_loader == 1">
+        <div class="loader"></div>
+    </div>
+    <div ui-view="header"></div>
+
+    <div ui-view="content"></div>
+    <div ui-view="footer"></div>
+</div> -->
+
+<!-- Begin page -->
+<div class="wrapper" ng-controller="DashboardController">
+    <div class="page_loader" ng-show="page_loader == 1">
+        <div class="loader">
+            Loading..
+        </div>
+    </div>
+    <div ui-view="sidebar"></div>
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+            <div class="navbar-custom">
+                <div ui-view="header"></div>
+            </div>
+            <div ui-view="content"></div>
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div ui-view="footer"></div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->

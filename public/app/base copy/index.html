@@ -1,0 +1,128 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- <section class="content-header">
+        <h1>
+            <%  mtitle %>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"><%  mtitle %></li>
+        </ol>
+    </section> -->
+
+
+
+    <!-- Main content -->
+    <section class="content" ng-if="mdata.flag == 1">
+        <!-- Default box -->
+        <div class="box">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+
+            <div class="box-header with-border">
+                <div class="btn-group" ng-if="mdata.can_bulk == true">
+                    <button type="button" class="btn btn-sm btn-info">Action</button>
+                    <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="bulk_action($event)" ng-repeat="bk in mdata.bulkactions"
+                                data-slug="<% bk.slug %>"><% bk.title %></a>
+                        </li>
+                    </ul>
+                </div>
+                <a ng-if="mdata.can_export == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                    class="btn btn-sm btn-primary"> Export
+                </a>
+                <a ng-click="apply_filter()" class="btn btn-sm btn-success"> Apply Filters</a>
+                <div class="box-tools">
+                    <div style="display: inline-block;">
+                        <a ng-if="mdata.can_add == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Add
+                            <%  mtitle %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-header with-border filter_control_wrapper">
+                <div class="row" compile="mdata.filtersinputs">
+                    <!-- <div class="col-md-3">
+                        <input type="text" class="form-control filter_control" name="table_search" id="title_text_id"
+                            value="" placeholder="Search By All" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control filter_control" name="title" id="title_text_id" value=""
+                            placeholder="Search By Title" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control filter_control" name="slug" id="slug_text_id" value=""
+                            placeholder="Search By Title" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control filter_control" name="parent_id" id="parent_id_text_id"
+                            value="" placeholder="Search By Parent" required="">
+                    </div> -->
+
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered crud_table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="cols in mdata.gridCol" class="<%  cols.sclass %>" compile="cols.title"
+                                ng-click="sort_col($event)" data-col='<% cols.slug %>'>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="mdata.griddata.data.length != 0">
+                        <tr ng-repeat="rows in mdata.griddata.data">
+                            <td ng-repeat="cols in mdata.gridCol" compile="rows[cols.slug]"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="mdata.griddata.data.length == 0">
+                        <tr class="text-center">
+                            <td colspan="<% mdata.gridCol.length %>"> <strong> No record Found </strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- <a href="" ng-click=""></a> -->
+            <!-- /.box-body -->
+            <div class=" box-footer">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group perpageItems">
+                            <label>Showing </label>
+                            <select ng-model="perpageItems" class="form-control form-control-sm input-sm"
+                                ng-change="itemsperchange(perpageItems)"
+                                ng-options="pageperdata for pageperdata in pageper">
+                            </select> entries
+                        </div>
+                    </div>
+                    <div class="col-md-4"> Showing <% mdata.griddata.from %> to <% mdata.griddata.to %> of
+                        <% mdata.griddata.total%> entries
+                    </div>
+                    <div class="col-md-6 pull-right text-right">
+                        <ul uib-pagination total-items="totalItems" ng-model="pageNo" ng-change="pageChanged(pageNo)"
+                            max-size="maxSize" class="pagination float-right" boundary-links="true"
+                            items-per-page="perpageItems">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,155 @@
+<style>
+    .ms_word input {
+        background: green;
+        color: #fff !important;
+    }
+
+    .ms_word input:focus {
+        background: green;
+        color: #fff;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.missing_words && catList.missing_words.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.missing_words" ng-click="showLib('missing_words',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 40%;">English</th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="mw_image_req"
+                                id="mw_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="mw_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th style="width: 13%;">Add Word</th>
+                    <th class="text-right" style="width: 100px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-right" colspan="5">
+                        <a ng-click="addPackageData(frTypes.MISSING_WORDS)" class="btn btn-sm text-white btn-primary">
+                            Add Missing Words
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="formData && formData.missing_words && formData.missing_words.length"
+                    ng-repeat="ew in formData.missing_words" ng-init="parentIndex = $index">
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.missing_words,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.missing_words,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td>
+                        <input type="hidden" name="missing_word_id[<% $index %>]" value="<% ew.missing_word_id %>">
+                        <div class="row" ng-if="ew.missing_word_sentences && ew.missing_word_sentences.length"
+                            ng-repeat="ews in ew.missing_word_sentences">
+                            <div class="col-md-10" ng-class="ews.type == '1' ? 'ms_word' : '';">
+                                <div class="form-group mb-1">
+                                    <div class="ews">
+                                        <input type="hidden"
+                                            name="missing_word_sentences[<% parentIndex %>][<% $index %>]['type']"
+                                            ng-model="ews.type" value="<% ews.type %>"
+                                            class="form-control form-control-sm required "
+                                            id="missing_word_sentences_<% parentIndex %>_<% $index %>_type"
+                                            placeholder="Enter Word">
+                                        <input type="text"
+                                            name="missing_word_sentences[<% parentIndex %>][<% $index %>]['value']"
+                                            ng-model="ews.value" class="form-control form-control-sm required "
+                                            id="missing_word_sentences_<% parentIndex %>_<% $index %>_value"
+                                            placeholder="Enter Word">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <a style="cursor: pointer;" ng-click="deleteWord(parentIndex,$index)"
+                                    class="btn btn-sm btn-danger text-white add_regular"><i class="fa fa-trash  ">
+                                    </i></a>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="!(ew.missing_word_sentences && ew.missing_word_sentences.length)">
+                            <div class="col-md-12"> Please Add Atleast on missing word and regular word</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="file" ng-model="ew.image1" name="missing_word_image[<% $index %>]"
+                                    class="form-control <% mw_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="missing_word_image_<% $index %>" data-index="<% $index %>" data-type="3"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="hidden" name="missing_word_image_urls[<% $index %>]"
+                                    value="<% ew.missing_word_image_urls %>">
+                                <img class="w-100" ng-show="ew.missing_word_image_urls"
+                                    src="<% showImg(ew.missing_word_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" ng-click="addWord('1',$index)"
+                            class="btn btn-sm btn-primary text-white mb-1 add_missing">+
+                            Missing word </a>
+                        <a style="cursor: pointer;" ng-click="addWord('2',$index)"
+                            class="btn btn-sm btn-primary text-white add_regular">+ Regular
+                            word </a>
+                    </td>
+                    <td class="text-right">
+
+                        <a ng-click="cloneRowAtIndex(formData.missing_words,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.missing_words,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.MISSING_WORDS,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- <tr
+                    ng-if="(formData && formData.missing_words && formData.missing_words.length && formData.missing_words.length < 8)">
+                    <td colspan="5"> <label class="cus_err"> Please add atleast 8 Records </label> </td>
+                </tr> -->
+                <!-- <tr ng-if="!(formData && formData.missing_words && formData.missing_words.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr> -->
+                <tr>
+                    <td colspan="5" class="text-right"><a ng-click="addPackageData(frTypes.MISSING_WORDS)"
+                            class="btn btn-sm text-white btn-primary">
+                            Add Missing Words
+                        </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

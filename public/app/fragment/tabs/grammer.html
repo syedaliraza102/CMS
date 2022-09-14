@@ -1,0 +1,210 @@
+<style>
+    .var_list>div {
+        margin-right: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 30px;
+        display: inline-block;
+        color: #fff;
+        padding: 2px 10px;
+        margin-bottom: 5px;
+    }
+
+    .var_list>div>a {
+        background: #000;
+        padding: 4px 10px;
+        border-radius: 50%;
+        min-width: 30px;
+        min-height: 30px;
+        margin-right: -10px;
+        margin-left: 10px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.grammer && catList.grammer.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.grammer" ng-click="showLib('grammer',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <div class="row var_container m-0 pt-2 pb-2" style="border-top: 1px solid #eee">
+            <div class="col-md-12">
+                <div class="row var_wrapper mb-15 mb-1" ng-if="formData && formData.grammerVars"
+                    ng-repeat="gmv in formData.grammerVars">
+                    <div class="col-md-2" style="line-height: 34px; padding-right: 0;flex: 0 0 13%;max-width: 13%;">
+                        Extra Words <% gmv.idx %> :</div>
+                    <div class="col-md-3 " style="flex: 0 0 22%;max-width: 22%;">
+                        <input autocomplete="off" ng-model="gmv.value" class=" form-control input-sm"
+                            id="temp_grammer_var1" type="text">
+                    </div>
+                    <div class="col-md-1 pr-0 pl-0">
+                        <a ng-click="addExtraWord($index)" class="btn text-white btn-sm btn-primary btn_add_variable">+
+                            Add</a>
+                    </div>
+                    <div class="col-md-6 var_list" ng-if="gmv && gmv.list">
+                        <div class="var_list_item" ng-repeat="gmvl in gmv.list"><span>
+                                <% gmvl %>
+                            </span><a class="remove_tag" ng-click="removeExtraWord(gmv.idx,$index)">x</a>
+                            <input type="hidden" name="grammer_var<% gmv.idx %>[<% $index %>]" value="<% gmvl %>"
+                                ng-model="gmvl">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        #
+                    </th>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 40%;">English</th>
+                    <th style="width: 40%;">Korean
+                        <!-- <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="gm_lang_req"
+                                id="gm_lang_checkbox_id" value="1">
+                            <label class="custom-control-label" for="gm_lang_checkbox_id"></label>
+                        </div> -->
+                    </th>
+                    <th class="text-right" style="width: 100px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="" colspan="3">
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" ng-click="changeDeleteSelect(frTypes.GRAMMER)"
+                                class="custom-control-input change_delete_checkbox" ng-model="delete_select_box"
+                                id="gm_delete_checkbox_id" value="1">
+                            <label class="custom-control-label" for="gm_delete_checkbox_id"></label>
+                        </div>
+                        <a ng-click="confirmDeleteSelected(frTypes.GRAMMER)" class="btn btn-sm text-white btn-primary">
+                            Delete Selected
+                        </a>
+                    </td>
+                    <td colspan="3" class="text-right">
+                        <a ng-click="addPackageData(frTypes.GRAMMER)" class="btn btn-sm text-white btn-primary">
+                            Add Grammar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="formData && formData.grammer && formData.grammer.length" ng-repeat="gm in formData.grammer">
+                <tr ng-if="showRecord($index + 1)">
+                    <td>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="gm.is_checked"
+                                id="gm_<% $index %>" value="1">
+                            <label class="custom-control-label" for="gm_<% $index %>"></label>
+                        </div>
+                    </td>
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.grammer,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.grammer,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td ng-if="!(gm.isEdit && gm.isEdit == true)">
+                        <% gm.grammer_english || '-' %>
+                            <input type="hidden" name="grammer_id[<% $index %>]" value="<% gm.grammer_id %>">
+                            <input type="hidden" name="grammer_english[<% $index %>]" value="<% gm.grammer_english %>">
+                    </td>
+                    <td ng-if="(gm.isEdit && gm.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="grammer_id[<% $index %>]" value="<% gm.grammer_id %>">
+                            <input type="text" name="grammer_english[<% $index %>]" ng-model="gm.grammer_english"
+                                class="form-control form-control-sm required " id="grammer_english_<% $index %>"
+                                placeholder="Enter English">
+                        </div>
+                    </td>
+                    <td ng-if="!(gm.isEdit && gm.isEdit == true)">
+                        <% gm.grammer_korean || '-' %>
+                            <input type="hidden" name="grammer_korean[<% $index %>]" value="<% gm.grammer_korean %>">
+                    </td>
+                    <td ng-if="(gm.isEdit && gm.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <input type="text" ng-model="gm.grammer_korean"
+                                class="form-control form-control-sm  required" name="grammer_korean[<% $index %>]"
+                                id="grammer_korean_<% $index %>" placeholder="Enter Korean">
+                        </div>
+
+                    </td>
+
+                    <td class="text-right">
+                        <a ng-if="!(gm.isEdit && gm.isEdit == true)" ng-click="gm.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a ng-click="cloneRowAtIndex(formData.grammer,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.grammer,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.GRAMMER,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn ">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right" ng-if="formData.grammer.length && formData.grammer.length > 0">
+                        <div class="row">
+                            <div class="col-md-5 text-left">
+                                <div class="form-group perpageItems mb-0">
+                                    <label>Showing </label>
+                                    <select ng-model="perpageItems"
+                                        class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                        ng-change="itemsperchange(perpageItems)"
+                                        ng-options="pageperdata for pageperdata in pageper">
+                                    </select> Records
+                                </div>
+                            </div>
+                            <div class="col-md-7 pull-right text-right">
+                                <ul uib-pagination boundary-link-numbers="true" total-items="formData.grammer.length"
+                                    ng-model="tempPageNo.pageNo" style="float: right;"
+                                    ng-change="pageChanged(tempPageNo.pageNo)" max-size="maxSize"
+                                    class="pagination float-right mb-0" boundary-links="true"
+                                    items-per-page="perpageItems">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.GRAMMER)" class="btn btn-sm text-white btn-primary">
+                            Add Grammar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

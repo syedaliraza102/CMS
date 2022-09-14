@@ -1,0 +1,242 @@
+<style>
+    .ms_word input {
+        background: green;
+        color: #fff !important;
+    }
+
+    .ms_word input:focus {
+        background: green;
+        color: #fff;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.missing_words && catList.missing_words.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.missing_words" ng-click="showLib('missing_words',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        #
+                    </th>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 40%;">English</th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="mw_image_req"
+                                id="mw_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="mw_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th style="width: 13%;">Add Word</th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="" colspan="3">
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" ng-click="changeDeleteSelect(frTypes.MISSING_WORDS)"
+                                class="custom-control-input change_delete_checkbox" ng-model="delete_select_box"
+                                id="qa_delete_checkbox_id" value="1">
+                            <label class="custom-control-label" for="qa_delete_checkbox_id"></label>
+                        </div>
+                        <a ng-click="confirmDeleteSelected(frTypes.MISSING_WORDS)"
+                            class="btn btn-sm text-white btn-primary">
+                            Delete Selected
+                        </a>
+                    </td>
+                    <td class="text-right" colspan="3">
+                        <a ng-click="addPackageData(frTypes.MISSING_WORDS)" class="btn btn-sm text-white btn-primary">
+                            Add Missing Words
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="formData && formData.missing_words && formData.missing_words.length"
+                ng-repeat="ew in formData.missing_words" ng-init="parentIndex = $index">
+                <tr ng-if="showRecord($index + 1)">
+                    <td>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="ew.is_checked"
+                                id="ew_<% $index %>" value="1">
+                            <label class="custom-control-label" for="ew_<% $index %>"></label>
+                        </div>
+                    </td>
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.missing_words,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.missing_words,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td ng-if="!(ew.isEdit && ew.isEdit == true)">
+
+                        <input type="hidden" name="missing_word_id[<% $index %>]" value="<% ew.missing_word_id %>">
+                        <div class="row mb-1" ng-if="ew.missing_word_sentences && ew.missing_word_sentences.length"
+                            ng-repeat="ews in ew.missing_word_sentences">
+                            <div class="col-md-10" ng-class="ews.type == '1' ? 'ms_word bg-green' : '';">
+                                <div class="ews">
+                                    <input type="hidden"
+                                        name="missing_word_sentences[<% parentIndex %>][<% $index %>]['type']"
+                                        value="<% ews.type %>">
+                                    <input type="hidden"
+                                        name="missing_word_sentences[<% parentIndex %>][<% $index %>]['value']"
+                                        value="<% ews.value %>">
+                                    <% ews.value %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <a style="cursor: pointer;" ng-click="deleteWord(parentIndex,$index)"
+                                    class="btn btn-sm btn-danger text-white add_regular"><i class="fa fa-trash  ">
+                                    </i></a>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td ng-if="(ew.isEdit && ew.isEdit == true)">
+                        <input type="hidden" name="missing_word_id[<% $index %>]" value="<% ew.missing_word_id %>">
+                        <div class="row" ng-if="ew.missing_word_sentences && ew.missing_word_sentences.length"
+                            ng-repeat="ews in ew.missing_word_sentences">
+                            <div class="col-md-10" ng-class="ews.type == '1' ? 'ms_word' : '';">
+                                <div class="form-group mb-1">
+                                    <div class="ews">
+                                        <input type="hidden"
+                                            name="missing_word_sentences[<% parentIndex %>][<% $index %>]['type']"
+                                            ng-model="ews.type" value="<% ews.type %>"
+                                            class="form-control form-control-sm required "
+                                            id="missing_word_sentences_<% parentIndex %>_<% $index %>_type"
+                                            placeholder="Enter Word">
+                                        <input type="text"
+                                            name="missing_word_sentences[<% parentIndex %>][<% $index %>]['value']"
+                                            ng-model="ews.value" class="form-control form-control-sm required "
+                                            id="missing_word_sentences_<% parentIndex %>_<% $index %>_value"
+                                            placeholder="Enter Word">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <a style="cursor: pointer;" ng-click="deleteWord(parentIndex,$index)"
+                                    class="btn btn-sm btn-danger text-white add_regular"><i class="fa fa-trash  ">
+                                    </i></a>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="!(ew.missing_word_sentences && ew.missing_word_sentences.length)">
+                            <div class="col-md-12"> Please Add Atleast on missing word and regular word</div>
+                        </div>
+                    </td>
+                    <td ng-if="!(ew.isEdit && ew.isEdit == true)">
+                        <div ng-if="ew.missing_word_image_urls">
+                            <img style="max-width: 100px;"
+                                class="w-100 replace_image <% ew.missing_word_image_urls ? 'hasImg' : '' %>"
+                                ng-if="ew.missing_word_image_urls" src="/public/images/loading.gif"
+                                src1="<% showImg(ew.missing_word_image_urls) %>">
+                        </div>
+                        <input type="hidden" name="missing_word_image_urls[<% $index %>]"
+                            value="<% ew.missing_word_image_urls %>">
+                    </td>
+                    <td ng-if="(ew.isEdit && ew.isEdit == true)">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="file" ng-model="ew.image1" name="missing_word_image[<% $index %>]"
+                                    class="form-control <% mw_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="missing_word_image_<% $index %>" data-index="<% $index %>" data-type="3"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="hidden" name="missing_word_image_urls[<% $index %>]"
+                                    value="<% ew.missing_word_image_urls %>">
+                                <img class="w-100" ng-show="ew.missing_word_image_urls"
+                                    src="<% showImg(ew.missing_word_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="!(ew.isEdit && ew.isEdit == true)"></td>
+                    <td ng-if="(ew.isEdit && ew.isEdit == true)">
+                        <a style="cursor: pointer;" ng-click="addWord('1',$index)"
+                            class="btn btn-sm btn-primary text-white mb-1 add_missing">+
+                            Missing word </a>
+                        <a style="cursor: pointer;" ng-click="addWord('2',$index)"
+                            class="btn btn-sm btn-primary text-white add_regular">+ Regular
+                            word </a>
+                    </td>
+                    <td class="text-right">
+                        <a ng-if="!(ew.isEdit && ew.isEdit == true)" ng-click="ew.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a ng-click="cloneRowAtIndex(formData.missing_words,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.missing_words,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.MISSING_WORDS,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+
+
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right"
+                        ng-if="formData.missing_words.length && formData.missing_words.length > 0">
+                        <div class="row">
+                            <div class="col-md-5 text-left">
+                                <div class="form-group perpageItems mb-0">
+                                    <label>Showing </label>
+                                    <select ng-model="perpageItems"
+                                        class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                        ng-change="itemsperchange(perpageItems)"
+                                        ng-options="pageperdata for pageperdata in pageper">
+                                    </select> Records
+                                </div>
+                            </div>
+                            <div class="col-md-7 pull-right text-right">
+                                <ul uib-pagination boundary-link-numbers="true"
+                                    total-items="formData.missing_words.length" ng-model="tempPageNo.pageNo"
+                                    style="float: right;" ng-change="pageChanged(tempPageNo.pageNo)" max-size="maxSize"
+                                    class="pagination float-right mb-0" boundary-links="true"
+                                    items-per-page="perpageItems">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right"><a ng-click="addPackageData(frTypes.MISSING_WORDS)"
+                            class="btn btn-sm text-white btn-primary">
+                            Add Missing Words
+                        </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

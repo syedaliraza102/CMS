@@ -1,0 +1,68 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_edit_class">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Edit <% mtitle %>
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"><% mtitle %></li>
+        </ol>
+    </section> -->
+
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content view_student_class">
+        <form id="editform" method="post" action="" enctype="multipart/form-data">
+            <!-- Default card -->
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 class="card-title float-left mb-0 mt-1"><% isClone ? 'Add' : 'Edit' %> <% mtitle %> </h3>
+                </div>
+                <div class="card-body">
+
+                    <input type="hidden" ng-model="pk" value="<% mpk_val %>" name="<% mpk %>">
+                    <input type="hidden" ng-model="_token" value="<% csrf_token %>" name="_token">
+                    <div compile="mform"></div>
+                    <!-- <div style="margin-left: 17.5%;" id="word-count" ng-show="role == 'student'" ></div> -->
+                    <div  style="margin-left: 17.5%;" id="word-count" ></div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="card-tools pull-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>" ui-sref-active="active"> Back to list
+                        </a>
+                        <button ng-hide="hideUpdate" type="button" class="btn btn-sm btn-success" ng-click="updateformdata($event)"
+                            ng-model="saveform"><% isClone ? 'Save' : 'Update' %>
+                            <% mtitle %> </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+
+
+</script>
+<style>
+    .ck-word-count__characters {
+    display: none;
+}
+</style>

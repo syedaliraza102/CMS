@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.ENGLISH_WORDS)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add English Words
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <!-- <a ng-if="catList && catList.english_words && catList.english_words.length"
+                    ng-repeat="cat in catList.english_words"><% cat.title %> (<% cat.list.length %>)</a> -->
+
+                <a ng-if="catList && catList.english_words && catList.english_words.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.english_words" ng-click="showLib('english_words',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 65px;">Sr NO</th>
+                    <th style="width: 50%;">English</th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox"
+                                ng-model="engw_image_req" id="engw_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="engw_image_checkbox_id"></label>
+                        </div>
+
+                    </th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="formData && formData.english_words && formData.english_words.length"
+                    ng-repeat="ew in formData.english_words">
+                    <td class="text-center"> <span class="btn btn-primary bg-dark border-dark">
+                            <% $index + 1 %>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="englishword_id[<% $index %>]" value="<% ew.englishword_id %>">
+                            <input type="text" name="englishword_word[<% $index %>]" ng-model="ew.englishword_word"
+                                class="form-control form-control-sm required " id="englishword_word_<% $index %>"
+                                placeholder="Enter English Word">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="file" ng-model="ew.image1" name="englishword_image[<% $index %>]"
+                                    class="form-control <% engw_image_req ? 'img_req' : '' %>"
+                                    data-rule-imgreqnew="true" id="englishword_image_<% $index %>"
+                                    data-index="<% $index %>" data-type="8"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-4">
+                                <!-- <input type="hidden" ng-show="ew.image && ew.image.path"
+                                    name="englishword_image_urls[<% $index %>]" value="<% ew.image.path %>">
+                                <img class="w-100 <% ew.image && ew.image.path ? 'hasImg' : '' %>"
+                                    ng-show="ew.image && ew.image.path" src="<% ew.image.viewpath %>"> -->
+                                <input type="hidden" name="englishword_image_urls[<% $index %>]"
+                                    value="<% ew.englishword_image_urls %>">
+                                <img class="w-100" ng-show="ew.englishword_image_urls"
+                                    src="<% showImg(ew.englishword_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"> <a ng-click="deletePackageData(frTypes.ENGLISH_WORDS,$index)"
+                            class="btn btn-sm text-white btn-danger btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a></td>
+                </tr>
+                <!-- <tr ng-if="!(formData && formData.english_words && formData.english_words.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr> -->
+                <!-- <tr
+                    ng-if="!(formData && formData.english_words && formData.english_words.length && formData.english_words.length >= 8)">
+                    <td colspan="5"> <label style="color: red;
+                    font-weight: 700;"> Please add atleast 8 Records </label> </td>
+                </tr> -->
+                <tr>
+                    <td colspan="4" class="text-right">
+                        <a ng-click="addPackageData(frTypes.ENGLISH_WORDS)"
+                            class="btn btn-sm text-white btn-primary mr-2">
+                            Add English Words
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

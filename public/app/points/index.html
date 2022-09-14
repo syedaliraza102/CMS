@@ -1,0 +1,186 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_index_class">
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content" ng-if="mdata.flag == 1">
+        <!-- Default card -->
+        <div class="card">
+
+            <div class="card-header with-border">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="mb-0 font-weight-semibold" style="margin-top: 2px !important;"> Manage Points </h3>
+                    </div>
+                    <div class="col-md-9 text-right">
+                        <a ng-if="mdata.can_add == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Add
+                            <% mtitle %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header with-border filter_control_wrapper">
+                <div class="row">
+                    <div class="col-md-11" style="flex: 0 0 calc(100% - 80px);">
+                        <div class="row" compile="mdata.filtersinputs">
+
+                        </div>
+                    </div>
+                    <div class="col-md-1 pl-0 pr-0 text-right" style="flex: 0 0 80px !important;max-width: 20%;">
+                        <a ng-click="apply_filter()" class="btn font-14 btn-success text-white"><i
+                                class="dripicons-experiment"></i></a>
+                         <a ng-click="remove_filter()" class="btn font-14 btn-danger text-white">
+                            <i class=" dripicons-trash"></i>
+                        </a>
+                    </div>
+					<div class="col-md-12" >
+						<br>
+						<button class="btn btn-xs btn-primary class-btn" style='margin-left:10px'  ng-click="classListSelect(0)" id="class_0">All</button>
+						<button class="btn btn-xs btn-primary class-btn" style='margin-left:10px' ng-repeat="cl in classList" ng-click="classListSelect(cl.class_id)" id="class_<%cl.class_id;%>"><% cl.class_name %></button>
+					</div>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="cols in mdata.gridCol" class="<%  cols.sclass %>" compile="cols.title"
+                                ng-click="sort_col($event)" data-col='<% cols.slug %>'></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="mdata.griddata.data.length != 0">
+                        <tr ng-repeat="rows in mdata.griddata.data">
+                            <td ng-repeat="cols in mdata.gridCol" compile="rows[cols.slug]"></td>
+                            <td><a class="btn btn-xs btn-success ng-scope" title="View" ng-click="changePoints(rows)">
+                                    <i class="text-white fa fa-trophy"> </i> </a></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="mdata.griddata.data.length == 0">
+                        <tr class="text-center">
+                            <td colspan="<% mdata.gridCol.length %>"> <strong> No record Found </strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- <a href="" ng-click=""></a> -->
+            <!-- /.card-body -->
+            <div class=" card-footer index_footer">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group perpageItems mb-0">
+                            <label>Showing </label>
+                            <select ng-model="perpageItems"
+                                class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                ng-change="itemsperchange(perpageItems)"
+                                ng-options="pageperdata for pageperdata in pageper">
+                            </select> entries
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right" style="line-height: 30px;"> Showing <% mdata.griddata.from %> to
+                            <% mdata.griddata.to %> of
+                                <% mdata.griddata.total%> entries
+                    </div>
+                    <div class="col-md-6 pull-right text-right">
+
+                        <ul uib-pagination total-items="totalItems" ng-model="pageNo" style="float: right;"
+                            ng-change="pageChanged(pageNo)" max-size="maxSize" class="pagination float-right mb-0"
+                            boundary-links="true" items-per-page="perpageItems">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
+    </section>
+
+
+    <div class="modal" id="changePointsModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Bonus Points #<% pointData.id || '-' %>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" ng-if="pointData && pointData.id">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td style="width: 125px;">Class Name : </td>
+                                <td>
+                                    <% pointData.class_name || '-' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Student Name : </td>
+                                <td>
+                                    <% pointData.user_name || '-' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Old Points : </td>
+                                <td>
+                                    <% pointData.points || 0 %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bonus Points : </td>
+                                <td>
+                                    <% pointData.cPoints || 0 %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>New Points : </td>
+                                <td>
+                                    <% pointData.nPoints || 0 %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Modify Points : </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <button ng-disabled="!(pointData.rPoints)" ng-click="modifyPoints('add')"
+                                                type="button" class=" add_points btn btn-success"> + </button>
+                                        </div>
+                                        <input type="number" class="number_box form-control"
+                                            ng-model="pointData.rPoints" step="1">
+
+                                        <div class="input-group-btn">
+                                            <button type="button" ng-disabled="!(pointData.rPoints)"
+                                                class="remove_points btn btn-danger" ng-click="modifyPoints('remove')">
+                                                - </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" ng-click="submitPoints()">Submit Points</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

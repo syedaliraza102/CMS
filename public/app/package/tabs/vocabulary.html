@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <!-- <h3 class="col-md-6 font-weight-semibold">Vocabulary Management</h3> -->
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData('vocabulary')"
+                    class="btn btn-sm text-white btn-primary">
+                    Add New
+                    Vocabulary</a></div>
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 65px;">Sr NO</th>
+                    <th style="width: 25%;">English</th>
+                    <th style="width: 25%;">Korean</th>
+                    <th>Image</th>
+                    <th class="text-right" style="width: 75px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="formData && formData.vocabulary && formData.vocabulary.length"
+                    ng-repeat="vc in formData.vocabulary">
+                    <td class="text-center">
+                        <% $index + 1 %>
+                    </td>
+                    <td>
+                        <div class="form-group mb-0">
+                            <input type="hidden" name="vocabulary_id[<% $index %>]" value="<% vc.vocabulary_id %>">
+                            <input type="text" name="vocabulary_english[<% $index %>]" ng-model="vc.vocabulary_english"
+                                class="form-control form-control-sm required " id="vocabulary_english_<% $index %>"
+                                placeholder="Enter English">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group mb-0">
+                            <input type="text" ng-model="vc.vocabulary_korean"
+                                class="form-control form-control-sm required " name="vocabulary_korean[<% $index %>]"
+                                id="vocabulary_korean_<% $index %>" placeholder="Enter Korean">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="file" ng-model="vc.image1" name="vocabulary_image[<% $index %>]"
+                                    class="form-control form-control-sm" id="vocabulary_image_<% $index %>"
+                                    data-index="<% $index %>" data-type="vocabulary"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="hidden" ng-show="vc.image && vc.image.path"
+                                    name="vocabulary_image_urls[<% $index %>]" value="<% vc.image.path %>">
+                                <img class="w-100" ng-show="vc.image && vc.image.path" src="<% vc.image.viewpath %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"> <a ng-click="deletePackageData('vocabulary',$index)"
+                            class="btn btn-sm text-white btn-danger btn_delete">
+                            <i class="fa fa-trash font-weight-semibold"> </i>
+                        </a></td>
+                </tr>
+                <tr ng-if="!(formData && formData.vocabulary && formData.vocabulary.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

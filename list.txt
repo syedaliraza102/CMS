@@ -1,0 +1,28 @@
+General
+1)	"Game" will now be called "homework activity" // Done
+2)	“Lesson” will be renamed to homework
+
+
+school1admin
+3) Students can have duplicate names (I think usernames should be unique. It needs to check if a username is already used or big problems could happen) // Done
+4) When admin is changing a password, We don't need "old password" incase the student has forgotton the password. There is no way to recover it. // Done
+
+School1student1
+1) Students need a way to change their password // Done
+
+school1teacher1
+
+1) Fragments: Able to choose and search "All data" from data library // Done
+2) “Data library” displayed in alphabetical order // Done
+3) Packages: Grammar – typo not “grammer” // Done
+4) Packages: delete “English Words” and “Role play” from packages // Done
+5) Game: There is only one game we need that uses “English words” – game name – “English words” need to make it work with “vocabulary package” // Kamlesh
+6) Package: “English sentences” please add Korean option to this. (adding Korean is Optional for the teacher) // Done
+7) Fragment / data library: so many data in the library. Need a search. Data library searchable by category drop-down, and by typing keyword // Done
+8) Data library: Ability to edit add and delete data library categories // Done
+
+9) Lesson: "fragment & games"  rename to "fragment & homework"
+10) Lesson: "game" - rename to "homework"
+11) When choosing game, it is a list right now.
+	A) We would like a grid with picture thumbnail of each activity. (click on 	thumbnail and it enlarges with instructions) Checkbox to select.
+	B) We need a "preview homework" button. Click the "preview" and it lets you try the game  with the selected fragment / fragments

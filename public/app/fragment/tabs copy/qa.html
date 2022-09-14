@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+
+            <!-- <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.qa && catList.qa.length" ng-repeat="cat in catList.qa"><% cat.title %>
+                    (<% cat.list.length %>)</a>
+            </div> -->
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.qa && catList.qa.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.qa" ng-click="showLib('qa',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+
+            <!-- <div class="col-md-3 mb-2 text-right">
+
+
+            </div> -->
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+
+                    <th style="width: 80px;">Sr NO</th>
+                    <th style="width: 25%;">English</th>
+                    <th style="width: 25%;">Korean
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="qa_lang_req"
+                                id="qa_lang_checkbox_id" value="1">
+                            <label class="custom-control-label" for="qa_lang_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th>Image
+
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="qa_image_req"
+                                id="qa_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="qa_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-right" colspan="5">
+                        <a ng-click="addPackageData(frTypes.QA)" class="btn btn-sm text-white btn-primary">
+                            Add Question & Answer
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="formData && formData.qa && formData.qa.length" ng-repeat="qa in formData.qa">
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.qa,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.qa,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+
+                    <td ng-if="(qa.isEdit && qa.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="qa_id[<% $index %>]" value="<% qa.qa_id %>">
+                            <input type="text" name="qa_english_question[<% $index %>]"
+                                ng-model="qa.qa_english_question" class="form-control form-control-sm required "
+                                id="qa_english_question_<% $index %>" placeholder="Enter English Question">
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" name="qa_english_answer[<% $index %>]" ng-model="qa.qa_english_answer"
+                                class="form-control form-control-sm required " id="qa_english_answer_<% $index %>"
+                                placeholder="Enter English Answer">
+                        </div>
+                    </td>
+                    <td ng-if="!(qa.isEdit && qa.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <% qa.qa_english_question || '-' %>
+                                <input type="hidden" name="qa_id[<% $index %>]" value="<% qa.qa_id %>">
+                                <input type="hidden" value="<% qa.qa_english_question %>"
+                                    name="qa_english_question[<% $index %>]" ng-model="qa.qa_english_question">
+                        </div>
+                        <div class="form-group mb-0">
+                            <% qa.qa_english_answer || '-' %>
+                                <input type="hidden" value="<% qa.qa_english_answer %>"
+                                    name="qa_english_answer[<% $index %>]" ng-model="qa.qa_english_answer">
+                        </div>
+                    </td>
+                    <td ng-if="(qa.isEdit && qa.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <input type="text" ng-model="qa.qa_korean_question"
+                                class="form-control form-control-sm <% qa_lang_req ? 'required' : '' %> "
+                                name="qa_korean_question[<% $index %>]" id="qa_korean_question_<% $index %>"
+                                placeholder="Enter Korean Question">
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" ng-model="qa.qa_korean_answer"
+                                class="form-control form-control-sm <% qa_lang_req ? 'required' : '' %> "
+                                name="qa_korean_answer[<% $index %>]" id="qa_korean_answer_<% $index %>"
+                                placeholder="Enter Korean Answer">
+                        </div>
+                    </td>
+                    <td ng-if="!(qa.isEdit && qa.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <% qa.qa_korean_question || '-' %>
+                                <input type="hidden" name="qa_id[<% $index %>]" value="<% qa.qa_id %>">
+                                <input type="hidden" value="<% qa.qa_korean_question %>"
+                                    name="qa_korean_question[<% $index %>]" ng-model="qa.qa_korean_question">
+                        </div>
+                        <div class="form-group mb-0">
+                            <% qa.qa_korean_answer || '-' %>
+                                <input type="hidden" value="<% qa.qa_korean_answer %>"
+                                    name="qa_korean_answer[<% $index %>]" ng-model="qa.qa_korean_answer">
+                        </div>
+                    </td>
+                    <td ng-if="(qa.isEdit && qa.isEdit == true)">
+                        <div class="row">
+                            <div class="col-md-9 form-group">
+                                <input type="file" ng-model="qa.image1" name="qa_image[<% $index %>]"
+                                    class="form-control <% qa_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="qa_image_<% $index %>" data-index="<% $index %>" data-type="2"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="hidden" name="qa_image_urls[<% $index %>]" value="<% qa.qa_image_urls %>">
+                                <div ng-if="qa.qa_image_urls">
+                                    <img class="w-100" ng-show="qa.qa_image_urls" src="<% showImg(qa.qa_image_urls) %>">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="!(qa.isEdit && qa.isEdit == true)">
+                        <input type="hidden" name="qa_image_urls[<% $index %>]" value="<% qa.qa_image_urls %>">
+                        <div ng-if="qa.qa_image_urls">
+                            <img style="max-width: 100px;" class="w-100" ng-show="qa.qa_image_urls"
+                                src="<% showImg(qa.qa_image_urls) %>">
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <a ng-if="!(qa.isEdit && qa.isEdit == true)" ng-click="qa.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a ng-click="cloneRowAtIndex(formData.qa,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.qa,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.QA,$index)"
+                            class="btn btn-sm text-white btn-danger btn_delete cus_btn">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-right" colspan="5">
+                        <a ng-click="addPackageData(frTypes.QA)" class="btn btn-sm text-white btn-primary">
+                            Add Question & Answer
+                        </a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .cus_btn {
+        padding: 2px 5px !important;
+    }
+
+    .cus_btn i {
+        font-weight: 400;
+    }
+
+    .index_col span {
+        padding: 2px 10px;
+        margin-bottom: 5px;
+    }
+</style>

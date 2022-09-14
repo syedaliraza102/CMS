@@ -1,0 +1,211 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.vocabulary && catList.vocabulary.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.vocabulary" ng-click="showLib('vocabulary',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        #
+                    </th>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 25%;">English</th>
+                    <th style="width: 25%;">Korean
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox"
+                                ng-model="vocabulary_lang_req" id="vocabulary_lang_checkbox_id" value="1">
+                            <label class="custom-control-label" for="vocabulary_lang_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox"
+                                ng-model="vocabulary_image_req" id="vocabulary_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="vocabulary_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="" colspan="3">
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" ng-click="changeDeleteSelect(frTypes.VOCABULARY)"
+                                class="custom-control-input change_delete_checkbox" ng-model="delete_select_box"
+                                id="VOCABULARY_delete_checkbox_id" value="1">
+                            <label class="custom-control-label" for="VOCABULARY_delete_checkbox_id"></label>
+                        </div>
+                        <a ng-click="confirmDeleteSelected(frTypes.VOCABULARY)"
+                            class="btn btn-sm text-white btn-primary">
+                            Delete Selected
+                        </a>
+                    </td>
+                    <td class="text-right " colspan="3">
+                        <a ng-click="addPackageData(frTypes.VOCABULARY)" class="btn btn-sm text-white btn-primary">
+                            Add Vocabulary
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tbody ng-if="formData && formData.vocabulary && formData.vocabulary.length"
+                ng-repeat="vc in formData.vocabulary">
+                <tr ng-if="showRecord($index + 1)">
+                    <td>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="vc.is_checked"
+                                id="vc_<% $index %>" value="1">
+                            <label class="custom-control-label" for="vc_<% $index %>"></label>
+                        </div>
+                    </td>
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.vocabulary,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.vocabulary,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td ng-if="(vc.isEdit && vc.isEdit == true)">
+                        <div class="form-group mb-0">
+                            <input type="hidden" name="vocabulary_id[<% $index %>]" value="<% vc.vocabulary_id %>">
+                            <input type="text" name="vocabulary_english[<% $index %>]" ng-model="vc.vocabulary_english"
+                                class="form-control form-control-sm required " id="vocabulary_english_<% $index %>"
+                                placeholder="Enter English">
+                        </div>
+
+                    </td>
+                    <td ng-if="!(vc.isEdit && vc.isEdit == true)">
+                        <% vc.vocabulary_english || '-' %>
+                            <input type="hidden" name="vocabulary_id[<% $index %>]" value="<% vc.vocabulary_id %>">
+                            <input type="hidden" name="vocabulary_english[<% $index %>]"
+                                value="<% vc.vocabulary_english %>">
+                    </td>
+                    <td ng-if="vc.isEdit && vc.isEdit == true">
+                        <div class="form-group mb-0">
+                            <input type="text" ng-model="vc.vocabulary_korean"
+                                class="form-control form-control-sm <% vocabulary_lang_req ? 'required' : '' %> "
+                                name="vocabulary_korean[<% $index %>]" id="vocabulary_korean_<% $index %>"
+                                placeholder="Enter Korean">
+                        </div>
+                    </td>
+                    <td ng-if="!(vc.isEdit && vc.isEdit == true)">
+                        <% vc.vocabulary_korean || '-' %>
+                            <input type="hidden" name="vocabulary_korean[<% $index %>]"
+                                value="<% vc.vocabulary_korean %>">
+                    </td>
+                    <td ng-if="vc.isEdit && vc.isEdit == true">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="file" ng-model="vc.image1" name="vocabulary_image[<% $index %>]"
+                                    class="form-control <% vocabulary_image_req ? 'img_req' : '' %>"
+                                    data-rule-imgreqnew="true" id="vocabulary_image_<% $index %>"
+                                    data-index="<% $index %>" data-type="5"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="hidden" name="vocabulary_image_urls[<% $index %>]"
+                                    value="<% vc.vocabulary_image_urls %>">
+                                <div ng-if="vc.vocabulary_image_urls">
+                                    <img class="w-100 replace_image <% vc.vocabulary_image_urls ? 'hasImg' : '' %>"
+                                        ng-if="vc.vocabulary_image_urls" src="/public/images/loading.gif"
+                                        src1="<% showImg(vc.vocabulary_image_urls) %>">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="!(vc.isEdit && vc.isEdit == true)">
+                        <div ng-if="vc.vocabulary_image_urls">
+                            <img style="max-width: 100px;"
+                                class="w-100 replace_image <% vc.vocabulary_image_urls ? 'hasImg' : '' %>"
+                                ng-if="vc.vocabulary_image_urls" src="/public/images/loading.gif"
+                                src1="<% showImg(vc.vocabulary_image_urls) %>">
+                        </div>
+                        <input type="hidden" name="vocabulary_image_urls[<% $index %>]"
+                            value="<% vc.vocabulary_image_urls %>">
+                    </td>
+                    <td class="text-right">
+                        <a ng-if="!(vc.isEdit && vc.isEdit == true)" ng-click="vc.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a id="vocab_clone" ng-click="cloneRowAtIndex(formData.vocabulary,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.vocabulary,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.VOCABULARY,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+
+
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right"
+                        ng-if="formData.vocabulary.length && formData.vocabulary.length > 0">
+                        <div class="row">
+                            <div class="col-md-5 text-left">
+                                <div class="form-group perpageItems mb-0">
+                                    <label>Showing </label>
+                                    <select ng-model="perpageItems"
+                                        class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                        ng-change="itemsperchange(perpageItems)"
+                                        ng-options="pageperdata for pageperdata in pageper">
+                                    </select> Records
+                                </div>
+                            </div>
+                            <div class="col-md-7 pull-right text-right">
+                                <ul uib-pagination boundary-link-numbers="true" total-items="formData.vocabulary.length"
+                                    ng-model="tempPageNo.pageNo" style="float: right;"
+                                    ng-change="pageChanged(tempPageNo.pageNo)" max-size="maxSize"
+                                    class="pagination float-right mb-0" boundary-links="true"
+                                    items-per-page="perpageItems">
+                                </ul>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.VOCABULARY)" class="btn btn-sm text-white btn-primary">
+                            Add New
+                            Vocabulary</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.VOCABULARY)"
+                class="btn btn-sm text-white btn-primary mr-2">
+                Add New
+                Vocabulary</a></div> -->
+    </div>
+</div>

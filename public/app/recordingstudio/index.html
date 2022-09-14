@@ -1,0 +1,108 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_index_class">
+    <section class="content" ng-if="mdata.flag == 1">
+        <!-- Default card -->
+        <div class="card">
+            <div class="card-header with-border">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="mb-0 font-weight-semibold" style="margin-top: 2px !important;"> <% mtitle %> </h3>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="card-body">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="cols in mdata.gridCol" class="<%  cols.sclass %>" compile="cols.title"
+                                ng-click="sort_col($event)" data-col='<% cols.slug %>'></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="mdata.griddata.data.length != 0">
+                        <tr ng-repeat="rows in mdata.griddata.data">
+                            <td ng-repeat="cols in mdata.gridCol" compile="rows[cols.slug]"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="mdata.griddata.data.length == 0">
+                        <tr class="text-center">
+                            <td colspan="<% mdata.gridCol.length %>"> <strong> No record Found </strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- <a href="" ng-click=""></a> -->
+            <!-- /.card-body -->
+            <div class=" card-footer index_footer">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group perpageItems mb-0">
+                            <label>Showing </label>
+                            <select ng-model="perpageItems"
+                                class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                ng-change="itemsperchange(perpageItems)"
+                                ng-options="pageperdata for pageperdata in pageper">
+                            </select> entries
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right" style="line-height: 30px;"> Showing <% mdata.griddata.from %> to
+                        <% mdata.griddata.to %> of
+                        <% mdata.griddata.total%> entries
+                    </div>
+                    <div class="col-md-6 pull-right text-right">
+
+                        <ul uib-pagination total-items="totalItems" ng-model="pageNo" style="float: right;"
+                            ng-change="pageChanged(pageNo)" max-size="maxSize" class="pagination float-right mb-0"
+                            boundary-links="true" items-per-page="perpageItems">
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
+
+        <div class="modal" tabindex="-1" id="stuListModel" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Student Lesson</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Student</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in stuList">
+                                <td><% $index + 1 %></td>
+                                <td><% row.user_name %></td>
+                                <td>
+                                        <div ng-if="isPending">-</div>
+                                        <div ng-if="!isPending">
+                                            <a  ng-click="showForm(row.lesson_id,row.id)" style="    padding: 3px 5px;font-size: 12px;" class="btn btn-xs bg-primary text-white"  title="Delete"><i class="fa fa-clipboard"></i></a>
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

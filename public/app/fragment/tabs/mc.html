@@ -1,0 +1,212 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.MC)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add Sentence And Extra Words
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <!-- <a ng-if="catList && catList.mc && catList.mc.length" ng-repeat="cat in catList.mc"><% cat.title %>
+                    (<% cat.list.length %>)</a> -->
+                <a ng-if="catList && catList.mc && catList.mc.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.mc" ng-click="showLib('mc',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        #
+                    </th>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 60%;">Choices (Selct checkbox to make option as correct)
+                    </th>
+                    <th>Type</th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="" colspan="3">
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" ng-click="changeDeleteSelect(frTypes.MC)"
+                                class="custom-control-input change_delete_checkbox" ng-model="delete_select_box"
+                                id="MC_delete_checkbox_id" value="1">
+                            <label class="custom-control-label" for="MC_delete_checkbox_id"></label>
+                        </div>
+                        <a ng-click="confirmDeleteSelected(frTypes.MC)" class="btn btn-sm text-white btn-primary">
+                            Delete Selected
+                        </a>
+                    </td>
+                    <td colspan="3" class="text-right">
+                        <a ng-click="addPackageData(frTypes.MC)" class="btn btn-sm text-white btn-primary">
+                            Add Multiple Choices
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="formData && formData.mc && formData.mc.length" ng-repeat="mc in formData.mc">
+                <tr ng-if="showRecord($index + 1)">
+                    <td>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="mc.is_checked"
+                                id="MC_<% $index %>" value="1">
+                            <label class="custom-control-label" for="MC_<% $index %>"></label>
+                        </div>
+                    </td>
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.mc,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.mc,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td ng-if="!(mc.isEdit && mc.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <% mc.choice_question || '-' %>
+                                <input type="hidden" name="multiple_choice_id[<% $index %>]"
+                                    value="<% mc.multiple_choice_id %>">
+                                <input type="hidden" name="choice_question[<% $index %>]"
+                                    value="<% mc.choice_question %>">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-1" ng-repeat="mctyp in mcTypes">
+                                <div class="input-group input-group-sm" ng-show="$index < 3 || mc.option_type == '6'">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox"
+                                                    name="choice_<% mctyp %>_ck[<% $parent.$index %>]"
+                                                    ng-model="mc['choice_'+mctyp].type" class="custom-control-input"
+                                                    id="chbox_choice_<% mctyp %>_<% $parent.$index %>">
+                                                <label class="custom-control-label"
+                                                    for="chbox_choice_<% mctyp %>_<% $parent.$index %>"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="line-height: 30px;padding-left: 15px;">
+                                        <% mc['choice_'+mctyp].value || '-' %>
+                                            <input type="hidden" name="choice_<% mctyp %>[<% $parent.$index %>]"
+                                                value="<% mc['choice_'+mctyp].value %>">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="mc.isEdit && mc.isEdit == true">
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="multiple_choice_id[<% $index %>]"
+                                value="<% mc.multiple_choice_id %>">
+                            <input type="text" name="choice_question[<% $index %>]" ng-model="mc.choice_question"
+                                class="form-control form-control-sm required " id="choice_question_<% $index %>"
+                                placeholder="Enter English Question">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-1" ng-repeat="mctyp in mcTypes">
+                                <div class="input-group input-group-sm" ng-show="$index < 3 || mc.option_type == '6'">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox"
+                                                    name="choice_<% mctyp %>_ck[<% $parent.$index %>]"
+                                                    ng-model="mc['choice_'+mctyp].type" class="custom-control-input"
+                                                    id="chbox_choice_<% mctyp %>_<% $parent.$index %>">
+                                                <label class="custom-control-label"
+                                                    for="chbox_choice_<% mctyp %>_<% $parent.$index %>"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="choice_<% mctyp %>[<% $parent.$index %>]"
+                                        class="form-control form-control-sm" ng-model="mc['choice_'+mctyp].value"
+                                        ng-class="$index < 3 || mc.option_type == '6' ? 'required' : ''"
+                                        id="choice_<% mctyp %>_<% $parent.$index %>" placeholder="Choice <% mctyp %>">
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="!(mc.isEdit && mc.isEdit == true)">
+                        <% mc.option_type %> Options
+                            <input type="hidden" name="option_type[<% $index %>]" value="<% mc.option_type %>">
+                    </td>
+                    <td ng-if="mc.isEdit && mc.isEdit == true">
+                        <select class="custom-select custom-select-sm mb-3" ng-model="mc.option_type">
+                            <option value="3" selected>3 Options</option>
+                            <option value="6">6 Options</option>
+                        </select>
+                        <input type="hidden" name="option_type[<% $index %>]" value="<% mc.option_type %>">
+                    </td>
+
+                    <td class="text-right">
+                        <a ng-if="!(mc.isEdit && mc.isEdit == true)" ng-click="mc.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a ng-click="cloneRowAtIndex(formData.mc,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.mc,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.MC,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right" ng-if="formData.mc.length && formData.mc.length > 0">
+                        <div class="row">
+                            <div class="col-md-5 text-left">
+                                <div class="form-group perpageItems mb-0">
+                                    <label>Showing </label>
+                                    <select ng-model="perpageItems"
+                                        class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                        ng-change="itemsperchange(perpageItems)"
+                                        ng-options="pageperdata for pageperdata in pageper">
+                                    </select> Records
+                                </div>
+                            </div>
+                            <div class="col-md-7 pull-right text-right">
+                                <ul uib-pagination boundary-link-numbers="true" total-items="formData.mc.length"
+                                    ng-model="tempPageNo.pageNo" style="float: right;"
+                                    ng-change="pageChanged(tempPageNo.pageNo)" max-size="maxSize"
+                                    class="pagination float-right mb-0" boundary-links="true"
+                                    items-per-page="perpageItems">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.MC)" class="btn btn-sm text-white btn-primary">
+                            Add Multiple Choices
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

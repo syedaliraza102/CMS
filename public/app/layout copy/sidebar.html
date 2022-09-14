@@ -1,0 +1,27 @@
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+        <ul class="sidebar-menu" data-widget="tree">
+            <li ng-repeat="data in dashboard.sidebar" ng-class="data.child == undefined ? '' : 'treeview'">
+                <a ui-sref="app.<% data.slug %>" ui-sref-active="active">
+                    <i class="<% data.icon %>"></i> <span><% data.title %> </span>
+                    <span class="pull-right-container" ng-if="data.child != undefined">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" ng-if="data.child.length != 0">
+                    <li ng-repeat="child in data.child"><a ui-sref="app.<% child.slug %>" ui-sref-active="active"><i
+                                class="<% child.icon %>"></i>
+                            <% child.title %></a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+<script>
+    $(document).ready(function () {
+        $('.sidebar-menu').tree()
+    })
+</script>

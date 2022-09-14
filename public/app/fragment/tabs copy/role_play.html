@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.ROLE_PLAY)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add Role Play
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <a ng-if="catList && catList.role_play && catList.role_play.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.role_play" ng-click="showLib('role_play',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 65px;">Sr NO</th>
+                    <th style="width: 25%;">English</th>
+                    <th style="width: 25%;">Korean
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="rp_lang_req"
+                                id="rp_lang_checkbox_id" value="1">
+                            <label class="custom-control-label" for="rp_lang_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="rp_image_req"
+                                id="rp_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="rp_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 75px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="formData && formData.role_play && formData.role_play.length"
+                    ng-repeat="rp in formData.role_play">
+                    <td class="text-center"> <span class="btn btn-primary bg-dark border-dark">
+                            <% $index + 1 %>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="role_play_id[<% $index %>]" value="<% rp.role_play_id %>">
+                            <input type="text" name="role_play_english_A[<% $index %>]"
+                                ng-model="rp.role_play_english_A" class="form-control form-control-sm required "
+                                id="role_play_english_A_<% $index %>" placeholder="Enter Person A">
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" name="role_play_english_B[<% $index %>]"
+                                ng-model="rp.role_play_english_B" class="form-control form-control-sm required "
+                                id="role_play_english_B_<% $index %>" placeholder="Enter Person B">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <input type="text" ng-model="rp.role_play_korean_A"
+                                class="form-control form-control-sm <% rp_lang_req ? 'required' : '' %> "
+                                name="role_play_korean_A[<% $index %>]" id="role_play_korean_A_<% $index %>"
+                                placeholder="Enter Korean Question">
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" ng-model="rp.role_play_korean_B"
+                                class="form-control form-control-sm <% rp_lang_req ? 'required' : '' %> "
+                                name="role_play_korean_B[<% $index %>]" id="role_play_korean_B_<% $index %>"
+                                placeholder="Enter Korean Answer">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="file" ng-model="rp.image1" name="role_play_image[<% $index %>]"
+                                    class="form-control <% rp_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="role_play_image_<% $index %>" data-index="<% $index %>" data-type="4"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-3">
+                                <!-- <input type="hidden" ng-show="rp.image && rp.image.path"
+                                    name="role_play_image_urls[<% $index %>]" value="<% rp.image.path %>">
+                                <img class="w-100 <% rp.image && rp.image.path ? 'hasImg' : '' %>"
+                                    ng-show="rp.image && rp.image.path" src="<% rp.image.viewpath %>"> -->
+                                <input type="hidden" name="role_play_image_urls[<% $index %>]"
+                                    value="<% rp.role_play_image_urls %>">
+                                <img class="w-100" ng-show="rp.role_play_image_urls"
+                                    src="<% showImg(rp.role_play_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right"> <a ng-click="deletePackageData(frTypes.ROLE_PLAY,$index)"
+                            class="btn btn-sm text-white btn-danger btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a></td>
+                </tr>
+                <!-- <tr ng-if="!(formData && formData.role_play && formData.role_play.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr> -->
+                <!-- <tr
+                    ng-if="!(formData && formData.role_play && formData.role_play.length && formData.role_play.length >= 8)">
+                    <td colspan="5"> <label style="color: red;
+                    font-weight: 700;"> Please add atleast 8 Records </label> </td>
+                </tr> -->
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.ROLE_PLAY)" class="btn btn-sm text-white btn-primary">
+                            Add Role Play
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

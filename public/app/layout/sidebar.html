@@ -1,0 +1,320 @@
+<style>
+.notifications {
+	position: fixed;
+    background: red;
+    color: white;
+    border-radius: 18px;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    font-weight: 1000;
+    text-align: center;
+    margin-top: -16px !important;
+
+}
+.icon {
+	width: 11%;
+}
+.icon-sub {
+    width: 14%;
+}
+.icon-span {
+	margin-left: 14px;
+}
+.icon-sub-span {
+    margin-left: 8px;
+}
+.icon-noti{
+	width:100%;
+}
+.side-nav .side-nav-link i {
+    margin: 0 5px 0 0 !important;
+}
+</style>
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu">
+
+    <div class="slimscroll-menu" id="left-side-menu-container">
+
+        <!-- LOGO -->
+        <a href="index.html" class="logo text-center" style="height: 70px;">
+           <!--  <span class="logo-lg">
+                <img src="public/images/logo-white.png" alt="" height="50">
+            </span>
+            <span class="logo-sm">
+                <img src="public/images/logo-white.png" alt="" height="50">
+            </span> -->
+        </a>
+
+
+
+        <!--- Sidemenu -->
+        <ul class="metismenu side-nav">
+            <!-- <li class="side-nav-item" ng-repeat="data in dashboard.sidebar">
+                <a class="side-nav-link" href="javascript:void(0);" ui-sref="app.<% data.slug %>"
+                    ui-sref-active="active" aria-expanded="<% data.child && data.child.length %>">
+                    <i class="<% data.icon %>"></i>
+                    <span> <% data.title %> </span>
+                    <span class="menu-arrow" ng-if="data.child && data.child.length"></span>
+                </a>
+
+                <ul class="side-nav-second-level mm-collapse" aria-expanded="false" ng-if="data.child.length != 0">
+                    <li ng-repeat="child in data.child">
+                        <a href="dashboard-analytics.html" href="#" ui-sref="app.<% child.slug %>"
+                            ui-sref-active="active"><i class="<% child.icon %>"></i><% child.title %></a>
+                    </li>
+                </ul>
+            </li> -->
+
+
+
+            <!-- <li class="side-nav-title side-nav-item">Apps</li> -->
+
+            <li class="side-nav-item">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);" ui-sref="app.home" style="margin-top: 27px;">
+                    <img src="public/icons/21.png" class="icon">
+                    <span class="icon-span"> Dashboard </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item" ng-show="role == 'admin'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);" ui-sref="app.school">
+                    <i class="uil-calender"></i>
+                    <span> School </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item" ng-show="role == 'admin' || role == 'schooladmin'">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class="uil-users-alt"></i>
+                    <span> User Managemant </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level" aria-expanded="false">
+                    <!-- <li>
+                        <a href="javascript:void(0);" ui-sref="app.users">Users</a>
+                    </li> -->
+                    <!-- <li>
+                        <a href="javascript:void(0);" ng-hide="!(dashboard.permission.includes('admin.category.index'))"
+                            ui-sref="app.schooladmins">School
+                            Admins</a>
+                    </li> -->
+                    <li ng-show="role == 'admin'">
+                        <a href="javascript:void(0);" ui-sref="app.schooladmins">School
+                            Admins</a>
+                    </li>
+                    <li ng-show="role == 'schooladmin'">
+                        <a href="javascript:void(0);" ui-sref="app.teachers">Teachers</a>
+                    </li>
+                    <li ng-show="role == 'schooladmin'">
+                        <a href="javascript:void(0);" ui-sref="app.students">Students</a>
+                    </li>
+                    <li ng-show="role == 'schooladmin'">
+                        <a href="javascript:void(0);" ui-sref="app.assignteacher">Assign Teachers</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="side-nav-item" ng-show="role != 'student'">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <img src="public/icons/01.png" class="icon">
+                    <span class="icon-span"> Class Managemant </span>
+                    <img src="public/icons/right.png" class="icon">
+                </a>
+                <ul class="side-nav-second-level" aria-expanded="false">
+                    <li ng-show="role == 'schooladmin'">
+                        <a href="javascript:void(0);" ui-sref="app.level">Level</a>
+                    </li>
+                    <li ng-show="role == 'schooladmin'">
+                        <a href="javascript:void(0);" ui-sref="app.class">Class</a>
+                    </li>
+                    <li ng-show="role == 'admin'">
+                        <a href="javascript:void(0);" ui-sref="app.game">Homework Activity</a>
+                    </li>
+                    <li ng-show="role == 'admin'">
+                        <a href="javascript:void(0);" ui-sref="app.package">Package</a>
+                    </li>
+                    <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.fragment({type : 'lib'})">
+                            <img src="public/icons/11.png" class="icon-sub"><span class="icon-sub-span">Data Library</span></a>
+                    </li>
+                    <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.fragment({type : 'frg'})"><img src="public/icons/14.png" class="icon-sub"><span class="icon-sub-span">Lesson Blocks</span></a>
+                    </li>
+                    <!-- <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.fragment({type : 'allin'})">All In Fragments</a>
+                    </li> -->
+                    <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.lesson({type : 'ls'})"><img src="public/icons/12.png" class="icon-sub"><span class="icon-sub-span">Set Homework</span></a>
+                    </li>
+					<li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.lesson({type : 'challenges'})"><img src="public/icons/12.png" class="icon-sub"><span class="icon-sub-span">Set Challenges</span></a>
+                    </li>
+                    <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.lesson({type : 'ex'})"><img src="public/icons/13.png" class="icon-sub"><span class="icon-sub-span">Set Exams</span></a>
+                    </li>
+                    <li ng-show="role == 'teachers'">
+                        <a href="javascript:void(0);" ui-sref="app.relaxationclass"><img src="public/icons/15.png" class="icon-sub"><span class="icon-sub-span">Set Arcade</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'admin'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.subscription">
+                    <i class="uil-calender"></i>
+                    <span> Subscription </span>
+                </a>
+            </li>
+
+
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.teacherstudentlessonscore({type : 'ls'})">
+                    <img src="public/icons/02.png" class="icon">
+                    <span class="icon-span"> Homework Result</span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.teacherstudentlessonscore({type : 'ex'})">
+                    <img src="public/icons/03.png" class="icon">
+                    <span class="icon-span"> Exam Result</span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.points({type : 'ex'})">
+                    <img src="public/icons/04.png" class="icon">
+                    <span class="icon-span"> Points Management </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.studentlessonscore({type : 'ls'})">
+					<i><img src="public/icons/02.png" class="icon-noti"><span class="notifications hom-noti">0</span></i>
+                    <span class="icon-span"> Homework </span>
+                </a>
+            </li> 
+			<li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.studentlessonscore({type : 'challenges'})">
+					<i><img src="public/icons/02.png" class="icon-noti"><span class="notifications challenges-noti">0</span></i>
+                    <span class="icon-span"> Challenges </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.studentlessonscore({type : 'ex'})">
+                    <i ><img src="public/icons/03.png" class="icon-noti"><span class="notifications exam-noti">0</span></i>
+                    <span class="icon-span"> Exam </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'student' || role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.assigmentlesson">
+                    <i > <img src="public/icons/05.png" class="icon-noti" ><span class="notifications assignment-noti" ng-show="role == 'student' ">0</span></i>
+                    <span class="icon-span"> Assignment </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.offlinehomework">
+					<img src="public/icons/06.png" class="icon">
+                    <span class="icon-span"> Homework Diary </span>
+                </a>
+            </li>
+           <!--  <li class="side-nav-item" ng-show="role == 'student'">
+                <a href="https://www.iadam.kr/FAQ.html" class="side-nav-link red">
+                    <i class="uil-calender"></i>
+                    <span> FAQ </span>
+                </a>
+            </li> -->
+            <li class="side-nav-item" ng-show="role == 'student' || role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.multiplayerroom">
+					<img src="public/icons/multiroom.png" class="icon">
+                    <span class="icon-span"> Multi Room </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'student' || role == 'teachers' || role == 'parent'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.relaxationdata">
+					<img src="public/icons/08.png" class="icon">
+                    <span class="icon-span"> Arcade Leader Board </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);" ui-sref="app.cards">
+					<img src="public/icons/09.png" class="icon">
+                    <span class="icon-span"> Card Managemant </span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'schooladmin'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.schoolsetting">
+                    <i class="uil-calender"></i>
+                    <span> School Setting </span>
+                </a>
+            </li>
+			<li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.recordingstudio">
+                    <i ><img src="public/icons/10.png" class="icon-noti"><span class="notifications record-noti" ng-show="role == 'student' ">0</span></i>
+                    <span class="icon-span"> Recording Studio</span>
+                </a>
+            </li>
+			<li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.achievements">
+                    <i ><img src="public/icons/10.png" class="icon-noti"><span class="notifications " ng-show="role == 'student' ">0</span></i>
+                    <span class="icon-span"> Achievements Page</span>
+                </a>
+            </li>
+            <li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.speakinglabteacher">
+                    <img src="public/icons/10.png" class="icon">
+                    <span class="icon-span"> Speaking Lab</span>
+                </a>
+            </li>
+			<li class="side-nav-item" ng-show="role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.teacherstudiorec">
+					<img src="public/icons/10.png" class="icon">
+                    <span class="icon-span"> Recording Studio</span>
+                </a>
+            </li>
+
+            <!-- <li class="side-nav-item" ng-show="role == 'student'">
+                <a href="/game/mini-heros/index.html?student_id=<% adminuser.id %>&points=<% adminuser.points %>"
+                    class="side-nav-link red">
+                    <i class="uil-calender"></i>
+                    <span> Create Card </span>
+                </a>
+            </li> -->
+            <!-- <li class="side-nav-item" ng-show="role == 'student' || role == 'teachers'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.multiplayerroom">
+                    <i class="uil-calender"></i>
+                    <span> Multi room </span>
+                </a>
+            </li> -->
+            <!-- <li class="side-nav-item" ng-show="role == 'student'">
+                <a href="apps-calendar.html" class="side-nav-link" href="javascript:void(0);"
+                    ui-sref="app.studentlessonscore({type : 'exam'})">
+                    <i class="uil-calender"></i>
+                    <span> Exam Score </span>
+                </a>
+            </li> -->
+        </ul>
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
+<!-- Left Sidebar End -->
+<!-- <script src="public/backend/assets/js/vendor.min.js"></script> -->
+<script src="public/backend/assets/js/app.min.js"></script>

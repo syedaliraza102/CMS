@@ -1,0 +1,131 @@
+<!-- <div class="col-md-6 col-md-offset-3" ng-controller="LoginController">
+    <h2>Login</h2>
+    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+    <form name="form" ng-submit="login()" role="form">
+        <div class="form-group"
+            ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required && form.email.$error.email }">
+            <label for="email">email</label>
+            <input type="email" name="email" id="email" class="form-control" ng-model="email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block error">email is
+                required</span>
+            <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block error">Please enter valid
+                email</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block error">Password is
+                required</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
+            <a href="#/register" class="btn btn-link">Register</a>
+        </div>
+    </form>
+</div> -->
+
+
+<!-- <div class="login-box" ng-controller="LoginController">
+    <div class="login-logo">
+        <b>Admin</b>LTE
+    </div>
+
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <form name="form" ng-submit="login()" role="form">
+            <div class="form-group has-feedback"
+                ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required && form.email.$error.email }">
+
+                <input type="email" placeholder="Enter email" name="email" id="email" class="form-control"
+                    ng-model="email" required />
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block error">email is
+                    required</span>
+                <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block error">Please enter valid
+                    email</span>
+            </div>
+            <div class="form-group has-feedback">
+
+                <input type="password" name="password" placeholder="Enter Password" id="password" class="form-control"
+                    ng-model="password" required />
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block error">Password
+                    is
+                    required</span>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <button type="submit" ng-disabled="form.$invalid"
+                        class="btn btn-primary btn-block btn-flat">Login</button>
+                </div>
+
+            </div>
+        </form>
+
+
+    </div>
+
+</div> -->
+
+<div class="account-pages mt-5 mb-5" ng-controller="LoginController">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card">
+
+                    <!-- Logo -->
+                    <div class="card-header pt-4 pb-4 text-center bg-primary">
+                        <!-- <a href="index.html">
+                            <span><img src="/backend/assets/images/logo.png" alt="" height="18"></span>
+                        </a> -->
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        <div class="text-center w-75 m-auto">
+                            <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Sign In</h4>
+                            <p class="text-muted mb-4">Enter your Username and password to access admin panel.</p>
+                        </div>
+
+                        <form name="form" ng-submit="login()" role="form">
+
+                            <div class="form-group">
+                                <label for="user_name">Username</label>
+                                <input class="form-control" type="text" id="user_name" placeholder="Enter your Username"
+                                    ng-model="email" required autocomplete="off">
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" id="password"
+                                    placeholder="Enter your password" ng-model="password" required autocomplete="off">
+                            </div>
+
+                            <!-- <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-primary w-100" ng-disabled="form.$invalid" type="submit"> Log In
+                                </button>
+                            </div>
+
+                        </form>
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
+
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end page -->

@@ -1,0 +1,14 @@
+/work_ppt
+/game
+/node_modules
+/public/hot
+/public/storage
+/public/images/package
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

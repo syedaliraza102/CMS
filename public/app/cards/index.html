@@ -1,0 +1,327 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_index_class">
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content" ng-if="mdata.flag == 1">
+        <!-- Default card -->
+        <div class="card">
+
+            <div class="card-header with-border">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="mb-0 font-weight-semibold" style="margin-top: 2px !important;">
+                            <% mtitle %>
+                        </h3>
+                    </div>
+                    <div class="col-md-9 text-right">
+                        <!-- <div class="btn-group" ng-if="mdata.can_bulk == true">
+                            <button type="button" class="btn btn-sm btn-info">Action</button>
+                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="bulk_action($event)" ng-repeat="bk in mdata.bulkactions"
+                                        data-slug="<% bk.slug %>"><% bk.title %></a>
+                                </li>
+                            </ul>
+                        </div> -->
+                        <!-- <a ng-if="mdata.can_export == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Export
+                        </a> -->
+                        <!-- <a ng-click="apply_filter()" class="btn btn-sm btn-success text-white"> Apply Filters</a> -->
+                        <a ng-if="mdata.can_add == true" ui-sref="app.<% slug %>_add" ui-sref-active="active"
+                            class="btn btn-sm btn-primary"> Add
+                            <% mtitle %>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- <div class="card-tools">
+                    <div style="display: inline-block;">
+
+
+                    </div>
+                </div> -->
+            </div>
+            <div class="card-header with-border filter_control_wrapper show_label">
+                <div class="row">
+                    <div class="col-md-11" style="flex: 0 0 calc(100% - 80px);">
+                        <div class="row" compile="mdata.filtersinputs">
+
+                        </div>
+                    </div>
+                    <div class="col-md-1 pl-0 pr-0 text-right" style="flex: 0 0 80px !important;max-width: 20%;">
+                        <a ng-click="apply_filter()" class="btn font-14 btn-success text-white"><i
+                                class="dripicons-experiment"></i></a>
+                         <a ng-click="remove_filter()" class="btn font-14 btn-danger text-white">
+                            <i class=" dripicons-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row" ng-if="mdata.griddata.data.length != 0">
+                    <div class="col-md-2" ng-repeat="card in mdata.griddata.data">
+                        <div class=" avatar_con <% card.is_avatar == 'a' ? 'is_avatar' : '' %>">
+                            <a class="d-block" style="cursor: pointer;">
+                                <div class="avatar_item mb-2">
+                                    <!-- <div class="avatar_button mt-1 mb-2 text-center">
+                                        <button class="btn p-1 pl-2 pr-2 btn-sm bg-dark text-white"
+                                            ng-if="card.is_buy != 'y'" ng-click="buyCardFun(card)">Buy
+                                            50,000 </button>
+                                        <button class="btn p-1 pl-2 pr-2 btn-sm bg-secondary text-white"
+                                            ng-if="card.is_buy == 'y'">Already Bought
+                                        </button>
+                                    </div> -->
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    <div class="avatar_img">
+                                        <img class="w-100" ng-click="showImagePopup(card)" src="<% showCardImg(card)%>">
+                                        <div class="date_wrapper">
+                                            <% showDate(card.created_at) %>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <div>
+                            <div class="w-100 btn p-1 pl-2 mb-1 pr-2 btn-sm bg-dark text-white">
+                                <% card.classtbl && card.classtbl.class_name ? card.classtbl.class_name : '-' %>
+                            </div>
+                        </div>
+                        <div ng-if="mdata.allow_card && mdata.allow_card == 'y'">
+                            <button class="w-100 btn p-1 pl-2 pr-2 btn-sm bg-dark text-white"
+                                ng-if="card.is_print != '2'" ng-click="printCardFun(card)">Print
+                            </button>
+                            <button class="w-100 btn p-1 pl-2 pr-2 btn-sm bg-secondary text-white"
+                                ng-if="card.is_print == '2'" ng-click="printCardFun(card)">Printed <span
+                                    ng-if="card.printed_date">
+                                    : <% showDate(card.printed_date) %>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <a href="http://localhost/dev_admin_new/public/images/default/no-image-available.png"
+                        class="download_file" download="proposed_file_name">Download</a> -->
+                </div>
+            </div>
+            <!-- <table class="table crud_table table-sm theme_table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="cols in mdata.gridCol" class="<%  cols.sclass %>" compile="cols.title"
+                                ng-click="sort_col($event)" data-col='<% cols.slug %>'></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="mdata.griddata.data.length != 0">
+                        <tr ng-repeat="rows in mdata.griddata.data">
+                            <td ng-repeat="cols in mdata.gridCol" compile="rows[cols.slug]"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="mdata.griddata.data.length == 0">
+                        <tr class="text-center">
+                            <td colspan="<% mdata.gridCol.length %>"> <strong> No record Found </strong></td>
+                        </tr>
+                    </tbody>
+                </table> -->
+        </div> <!-- <a href="" ng-click=""></a> -->
+        <!-- /.card-body -->
+        <div class=" card-footer index_footer">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group perpageItems mb-0">
+                        <label>Showing </label>
+                        <select ng-model="perpageItems"
+                            class="form-control form-control-sm input-sm w-50 d-inline-block"
+                            ng-change="itemsperchange(perpageItems)"
+                            ng-options="pageperdata for pageperdata in pageper">
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-md-3 text-right" style="line-height: 30px;"> Showing <% mdata.griddata.from %> to
+                        <% mdata.griddata.to %> of
+                            <% mdata.griddata.total%> entries
+                </div>
+                <div class="col-md-6 pull-right text-right">
+
+                    <ul uib-pagination total-items="totalItems" ng-model="pageNo" style="float: right;"
+                        ng-change="pageChanged(pageNo)" max-size="maxSize" class="pagination float-right mb-0"
+                        boundary-links="true" items-per-page="perpageItems">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.card-footer-->
+</div>
+<!-- /.card -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<style>
+    .filter_control_wrapper.show_label .control-label {
+        display: block !important;
+        text-align: left !important;
+    }
+
+    .index_footer {
+        display: none;
+    }
+
+
+
+    .theme_table * {
+        font-family: 'Pointfree';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px !important;
+        color: #fff;
+    }
+
+    .theme_table th {
+        background-color: #ED7D31;
+        color: #fff;
+    }
+
+    .theme_table tr {
+        margin-bottom: 2px;
+    }
+
+    .theme_table tr:nth-child(1n) {
+        background-color: #7030A0;
+    }
+
+    .theme_table tr:nth-child(2n) {
+        background-color: #A365D1;
+    }
+
+    .crud_table.theme_table .is_sort {
+        padding-right: 35px;
+    }
+
+    .crud_table.theme_table tr td:last-child,
+    .crud_table.theme_table tr th:last-child {
+        max-width: 500px !important;
+    }
+</style>
+
+
+
+<style>
+    .avatar_item {
+        position: relative
+    }
+
+    .avatar_item>i {
+        position: absolute;
+        top: 8%;
+        right: 1.5%;
+        color: green;
+        font-size: 19px;
+        display: none;
+        width: 16%;
+        height: 4%;
+        font-size: 150%;
+    }
+
+    .is_avatar .avatar_item>i {
+        display: block;
+    }
+
+    .col-md-2.avatar_con {
+        /* width: 12.5% !important;
+        max-width: 12.5%; */
+        padding: 0px 10px;
+    }
+
+    .date_wrapper {
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        font-size: 12px;
+        width: 100%;
+        padding: 5px;
+    }
+
+
+    .owl-nav {
+        position: absolute;
+        top: calc(50% - 50px);
+        background: transparent;
+        width: 100%;
+    }
+
+    .avatar_wrapper .owl-carousel .owl-nav button.owl-prev {
+        float: left;
+        background: #666 !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        font-size: 36px;
+        color: #fff;
+    }
+
+    .avatar_wrapper .owl-carousel .owl-nav button.owl-next {
+        float: right;
+        background: #666 !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        font-size: 36px;
+        color: #fff;
+    }
+
+    .is_printed .print_yes {
+        display: block;
+        border-color: #14b56f !important
+    }
+
+    .is_printed .print_no {
+        display: none;
+
+    }
+
+    .print_yes {
+        display: none;
+    }
+
+    .custom_owl button.owl-next,
+    .custom_owl button.owl-prev {
+        font-size: 50px !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        padding: 10px !important;
+    }
+
+    .custom_owl button.owl-next span,
+    .custom_owl button.owl-prev span {
+        padding: 10px;
+        color: #fff !important;
+    }
+
+    .custom_owl .owl-nav {
+        top: calc(50% - 75px);
+        height: 1px;
+    }
+
+    .custom_owl button.owl-next {
+        float: right;
+    }
+
+    .custom_owl button.owl-prev {
+        float: left;
+    }
+</style>

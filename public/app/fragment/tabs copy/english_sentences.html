@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.ENGLISH_SENTENCES)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add English Sentence
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <!-- <a ng-if="catList && catList.english_sentences && catList.english_sentences.length"
+                    ng-repeat="cat in catList.english_sentences"><% cat.title %> (<% cat.list.length %>)</a> -->
+                <a ng-if="catList && catList.english_sentences && catList.english_sentences.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.english_sentences" ng-click="showLib('english_sentences',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 30%;">English</th>
+                    <th style="width: 30%;">Korean
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="es_lang_req"
+                                id="es_lang_checkbox_id" value="1">
+                            <label class="custom-control-label" for="es_lang_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="es_image_req"
+                                id="es_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="es_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 100px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-right" colspan="5">
+                        <a ng-click="addPackageData(frTypes.ENGLISH_SENTENCES)"
+                            class="btn btn-sm text-white btn-primary mr-2">
+                            Add English Sentence
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="formData && formData.english_sentences && formData.english_sentences.length"
+                    ng-repeat="es in formData.english_sentences">
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.english_sentences,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.english_sentences,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="englishsentence_id[<% $index %>]"
+                                value="<% es.englishsentence_id %>">
+                            <!-- <input type="text"
+                                placeholder="Enter English Word"> -->
+                            <textarea name="englishsentence_sentence[<% $index %>]"
+                                ng-model="es.englishsentence_sentence" class="form-control form-control-sm required "
+                                id="englishsentence_sentence_<% $index %>" placeholder="Enter English" cols="30"
+                                rows="3"></textarea>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <textarea name="englishsentence_korean[<% $index %>]" ng-model="es.englishsentence_korean"
+                                class="form-control form-control-sm <% es_lang_req ? 'required' : '' %> "
+                                id="englishsentence_korean_<% $index %>" placeholder="Enter Korean" cols="30"
+                                rows="3"></textarea>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="file" ng-model="es.image1" name="englishsentence_image[<% $index %>]"
+                                    class="form-control <% es_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="englishsentence_image_<% $index %>" data-index="<% $index %>" data-type="9"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-4">
+                                <!-- <input type="hidden" ng-show="es.image && es.image.path"
+                                    name="englishsentence_image_urls[<% $index %>]" value="<% es.image.path %>">
+                                <img class="w-100 <% es.image && es.image.path ? 'hasImg' : '' %>"
+                                    ng-show="es.image && es.image.path" src="<% es.image.viewpath %>"> -->
+                                <input type="hidden" name="englishsentence_image_urls[<% $index %>]"
+                                    value="<% es.englishsentence_image_urls %>">
+                                <img class="w-100" ng-show="es.englishsentence_image_urls"
+                                    src="<% showImg(es.englishsentence_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <a ng-click="cloneRowAtIndex(formData.english_sentences,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.english_sentences,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.ENGLISH_SENTENCES,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- <tr ng-if="!(formData && formData.english_sentences && formData.english_sentences.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr> -->
+                <!-- <tr
+                    ng-if="!(formData && formData.english_sentences && formData.english_sentences.length && formData.english_sentences.length >= 8)">
+                    <td colspan="5"> <label style="color: red;
+                    font-weight: 700;"> Please add atleast 8 Records </label> </td>
+                </tr> -->
+                <tr>
+                    <td class="text-right" colspan="5">
+                        <a ng-click="addPackageData(frTypes.ENGLISH_SENTENCES)"
+                            class="btn btn-sm text-white btn-primary mr-2">
+                            Add English Sentence
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

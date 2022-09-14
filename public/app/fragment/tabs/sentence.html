@@ -1,0 +1,206 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.SENTENCE)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add Multiple choice
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <!-- <a ng-if="catList && catList.sentence && catList.sentence.length"
+                    ng-repeat="cat in catList.sentence"><% cat.title %> (<% cat.list.length %>)</a> -->
+                <a ng-if="catList && catList.sentence && catList.sentence.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.sentence" ng-click="showLib('sentence',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">
+                        #
+                    </th>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 60%;">Sentence & extra words
+                    </th>
+                    <th>Image
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="sc_image_req"
+                                id="sc_image_checkbox_id" value="1">
+                            <label class="custom-control-label" for="sc_image_checkbox_id"></label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 150px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="" colspan="3">
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" ng-click="changeDeleteSelect(frTypes.SENTENCE)"
+                                class="custom-control-input change_delete_checkbox" ng-model="delete_select_box"
+                                id="SENTENCE_delete_checkbox_id" value="1">
+                            <label class="custom-control-label" for="SENTENCE_delete_checkbox_id"></label>
+                        </div>
+                        <a ng-click="confirmDeleteSelected(frTypes.SENTENCE)" class="btn btn-sm text-white btn-primary">
+                            Delete Selected
+                        </a>
+                    </td>
+                    <td colspan="3" class="text-right">
+                        <a ng-click="addPackageData(frTypes.SENTENCE)" class="btn btn-sm text-white btn-primary">
+                            Add Sentence
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="formData && formData.sentence && formData.sentence.length"
+                ng-repeat="sc in formData.sentence">
+                <tr ng-if="showRecord($index + 1)">
+                    <td>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                            style="vertical-align: bottom;">
+                            <input type="checkbox" class="custom-control-input change_checkbox" ng-model="sc.is_checked"
+                                id="SENTENCE_<% $index %>" value="1">
+                            <label class="custom-control-label" for="SENTENCE_<% $index %>"></label>
+                        </div>
+                    </td>
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.sentence,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.sentence,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td ng-if="!(sc.isEdit && sc.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <% sc.extrawords_sentence || '-' %>
+                                <input type="hidden" name="extra_word_id[<% $index %>]" value="<% sc.extra_word_id %>">
+                                <input type="hidden" name="extrawords_sentence[<% $index %>]"
+                                    value="<% sc.extrawords_sentence %>">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-1 pr-1" ng-repeat="wrType in wordTypes">
+                                <% sc['extrawords_word'+wrType] || '-' %>
+                                    <input type="hidden" name="extrawords_word<% wrType %>[<% $parent.$index %>]"
+                                        class="form-control form-control-sm required"
+                                        ng-model="sc['extrawords_word'+wrType]"
+                                        id="extrawords_word<% wrType %>_<% $parent.$index %>"
+                                        placeholder="Word <% wrType %>" value="<% sc['extrawords_word'+wrType] %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="(sc.isEdit && sc.isEdit == true)">
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="extra_word_id[<% $index %>]" value="<% sc.extra_word_id %>">
+                            <input type="text" name="extrawords_sentence[<% $index %>]"
+                                ng-model="sc.extrawords_sentence" class="form-control form-control-sm required "
+                                id="extrawords_sentence_<% $index %>" placeholder="Enter Question">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-1 pr-1" ng-repeat="wrType in wordTypes">
+                                <input type="text" name="extrawords_word<% wrType %>[<% $parent.$index %>]"
+                                    class="form-control form-control-sm required"
+                                    ng-model="sc['extrawords_word'+wrType]"
+                                    id="extrawords_word<% wrType %>_<% $parent.$index %>"
+                                    placeholder="Word <% wrType %>">
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-if="!(sc.isEdit && sc.isEdit == true)">
+                        <div ng-if="sc.extrawords_image_urls">
+                            <img style="max-width: 100px;"
+                                class="w-100 replace_image <% sc.extrawords_image_urls ? 'hasImg' : '' %>"
+                                ng-if="sc.extrawords_image_urls" src="/public/images/loading.gif"
+                                src1="<% showImg(sc.extrawords_image_urls) %>">
+                        </div>
+                        <input type="hidden" name="extrawords_image_urls[<% $index %>]"
+                            value="<% sc.extrawords_image_urls %>">
+                    </td>
+                    <td ng-if="(sc.isEdit && sc.isEdit == true)">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="file" ng-model="sc.image1" name="extrawords_image[<% $index %>]"
+                                    class="form-control <% sc_image_req ? 'img_req' : '' %>" data-rule-imgreqnew="true"
+                                    id="extrawords_image_<% $index %>" data-index="<% $index %>" data-type="7"
+                                    onchange="angular.element(this).scope().imageUpload(this)"
+                                    placeholder="Enter Korean">
+                            </div>
+                            <div class="col-md-4 pl-0">
+                                <input type="hidden" name="extrawords_image_urls[<% $index %>]"
+                                    value="<% sc.extrawords_image_urls %>">
+                                <img class="w-100" ng-show="sc.extrawords_image_urls"
+                                    src="<% showImg(sc.extrawords_image_urls) %>">
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="text-right">
+                        <a ng-if="!(sc.isEdit && sc.isEdit == true)" ng-click="sc.isEdit = true;"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-edit  "> </i>
+                        </a>
+                        <a ng-click="cloneRowAtIndex(formData.sentence,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.sentence,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.SENTENCE,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right" ng-if="formData.sentence.length && formData.sentence.length > 0">
+                        <div class="row">
+                            <div class="col-md-5 text-left">
+                                <div class="form-group perpageItems mb-0">
+                                    <label>Showing </label>
+                                    <select ng-model="perpageItems"
+                                        class="form-control form-control-sm input-sm w-50 d-inline-block"
+                                        ng-change="itemsperchange(perpageItems)"
+                                        ng-options="pageperdata for pageperdata in pageper">
+                                    </select> Records
+                                </div>
+                            </div>
+                            <div class="col-md-7 pull-right text-right">
+                                <ul uib-pagination boundary-link-numbers="true" total-items="formData.sentence.length"
+                                    ng-model="tempPageNo.pageNo" style="float: right;"
+                                    ng-change="pageChanged(tempPageNo.pageNo)" max-size="maxSize"
+                                    class="pagination float-right mb-0" boundary-links="true"
+                                    items-per-page="perpageItems">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.SENTENCE)" class="btn btn-sm text-white btn-primary">
+                            Add Sentence
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

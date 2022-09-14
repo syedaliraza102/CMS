@@ -1,0 +1,351 @@
+<style>
+    .ctab .nav-link {
+        cursor: pointer;
+        padding: 10px 13px;
+    }
+
+
+    .img_list img {
+        max-width: 50px;
+    }
+
+    .lib_wrapper .cat_list {
+        display: none !important;
+    }
+
+    .fragment_form.lib_type>.form-group.row {
+        width: calc(49% - 10px);
+        display: inline-block;
+        margin: 0px 5px;
+        vertical-align: top;
+    }
+
+    .fragment_form.lib_type>.form-group.row:nth-child(4) {
+        width: 100%;
+        display: block;
+        margin: 10px 5px;
+    }
+
+    .fragment_form.frg_type>.form-group.row {
+        width: calc(49% - 10px);
+        display: inline-block;
+        margin: 0px 5px;
+        vertical-align: top;
+    }
+
+    .fragment_form.frg_type>.form-group.row:nth-child(4) {
+        width: 100%;
+        display: block;
+        margin: 10px 5px;
+    }
+
+
+    .fragment_form>.form-group.row>label {
+        text-align: left !important;
+    }
+
+    .fragment_form .custom-checkbox {
+        flex: 0 0 23%;
+        max-width: 23%;
+        margin-bottom: 5px;
+    }
+
+    .tab-content {
+        border: 1px solid #ccc;
+        border-color: #fff #dee2e6 #dee2e6;
+    }
+
+    .cus_err {
+        color: red;
+        font-weight: 700;
+    }
+
+    .cat_list {
+        padding: 0px 20px;
+        max-height: 200px;
+        overflow-y: auto;
+        flex: 0 0 calc(100% - 12px);
+        max-width: calc(100% - 12px);
+    }
+
+    .cat_list a {
+        margin-right: 5px;
+        background: #313a46;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 14px;
+        color: #fff !important;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    .hide_cat .cat_list {
+        display: none;
+    }
+
+    .ms_word.bg-green {
+        background: green;
+        color: #fff !important;
+        line-height: 30px;
+    }
+</style>
+<style>
+    .cus_btn {
+        padding: 2px 5px !important;
+    }
+
+    .cus_btn i {
+        font-weight: 400;
+    }
+
+    .index_col span {
+        padding: 2px 10px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper <% slug %>_add_class">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Add <% mtitle %>
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"><% mtitle %></li>
+        </ol>
+    </section> -->
+
+    <!-- Main content -->
+    <!-- <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);" ui-sref="app.home">Home</a></li>
+                <li class="breadcrumb-item active"><% mtitle %></li>
+            </ol>
+        </div>
+        <h4 class="page-title"><% mtitle %></h4>
+    </div> -->
+    <section class="content">
+        <form id="addform" method="post" action="" enctype="multipart/form-data">
+            <!-- Default card -->
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 class="card-title float-left mb-0 mt-1">Add <% mtitle %>
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    <input type="hidden" ng-model="pk" value="<% mpk_val %>" name="<% mpk %>">
+                    <input type="hidden" ng-model="_token" value="<% csrf_token %>" name="_token">
+                    <div class="fragment_form <% frgType == 'lib' ? 'lib_type' : 'frg_type'  %> " compile="mform"></div>
+
+                    <ul class="nav nav-tabs  ctab <% frgType == 'lib' ? 'hide_cat' : ''  %> "
+                        ng-if="selectedPackages && selectedPackages.length">
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.VOCABULARY)">
+                            <a ng-click="setTab(frTypes.VOCABULARY)"
+                                class=" nav-link <% activeTab == frTypes.VOCABULARY ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Vocabulary</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.QA)">
+                            <a ng-click="setTab(frTypes.QA)"
+                                class=" nav-link <% activeTab == frTypes.QA ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Question & Answer</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.ROLE_PLAY)">
+                            <a ng-click="setTab(frTypes.ROLE_PLAY)"
+                                class=" nav-link <% activeTab == frTypes.ROLE_PLAY ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Role Play</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.MC)">
+                            <a ng-click="setTab(frTypes.MC)"
+                                class=" nav-link <% activeTab == frTypes.MC ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Multiple choice</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.SENTENCE)">
+                            <a ng-click="setTab(frTypes.SENTENCE)"
+                                class=" nav-link <% activeTab == frTypes.SENTENCE ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Sentence And Extra Words</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.ENGLISH_WORDS)">
+                            <a ng-click="setTab(frTypes.ENGLISH_WORDS)"
+                                class=" nav-link <% activeTab == frTypes.ENGLISH_WORDS ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">English Words </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.ENGLISH_SENTENCES)">
+                            <a ng-click="setTab(frTypes.ENGLISH_SENTENCES)"
+                                class=" nav-link <% activeTab == frTypes.ENGLISH_SENTENCES ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">English Sentences </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.MISSING_WORDS)">
+                            <a ng-click="setTab(frTypes.MISSING_WORDS)"
+                                class=" nav-link <% activeTab == frTypes.MISSING_WORDS ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Missing Words </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-if="selectedPackages.includes(frTypes.GRAMMER)">
+                            <a ng-click="setTab(frTypes.GRAMMER)"
+                                class=" nav-link <% activeTab == frTypes.GRAMMER ? ' active ' : '' %>">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Grammar </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content pt-2 <% frgType == 'lib' ? 'hide_cat' : ''  %> <% frgType == 'lib' ? 'lib_wrapper' : '' %>"
+                        ng-if="selectedPackages && selectedPackages.length">
+                        <div ng-if="selectedPackages.includes(frTypes.VOCABULARY)"
+                            class="tab-pane <% activeTab == frTypes.VOCABULARY ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/vocabulary.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.QA)"
+                            class="tab-pane <% activeTab == frTypes.QA ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/qa.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.ROLE_PLAY)"
+                            class="tab-pane <% activeTab == frTypes.ROLE_PLAY ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/role_play.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.MC)"
+                            class="tab-pane <% activeTab == frTypes.MC ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/mc.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.SENTENCE)"
+                            class="tab-pane <% activeTab == frTypes.SENTENCE ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/sentence.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.ENGLISH_WORDS)"
+                            class="tab-pane <% activeTab == frTypes.ENGLISH_WORDS ? ' show active ' : '' %>"
+                            id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/english_words.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.ENGLISH_SENTENCES)"
+                            class="tab-pane <% activeTab == frTypes.ENGLISH_SENTENCES ? ' show active ' : '' %>"
+                            id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/english_sentences.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.MISSING_WORDS)"
+                            class="tab-pane <% activeTab == frTypes.MISSING_WORDS ? ' show active ' : '' %>"
+                            id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/missing_words.html'"></div>
+                        </div>
+                        <div ng-if="selectedPackages.includes(frTypes.GRAMMER)"
+                            class="tab-pane <% activeTab == frTypes.GRAMMER ? ' show active ' : '' %>" id="home-b1">
+                            <div ng-include="'public/app/fragment/tabs/grammer.html'"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="card-tools pull-right">
+                        <a class="btn btn-sm btn-primary" ui-sref="app.<% slug %>({type : frgType})"
+                            ui-sref-active="active"> Back to list
+                        </a>
+                        <button type="button" class="btn btn-sm btn-success" ng-click="saveformdata($event)"
+                            ng-model="saveform">Save
+                            <% mtitle %>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <!-- /.card -->
+
+    </section>
+    <div class="modal" id="addLib" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <% libType+' : '+ libTitle %></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 input-group-sm" style="width: 40%;margin-left: 60%;">
+                        <input type="text" class="form-control" ng-model="searchcat" ng-change="searchcatData()"
+                            id="inlineFormInputGroup" placeholder="Search">
+                        <div class="input-group-append">
+                            <div class="input-group-text"> <i class="fa fa-search"></i> </div>
+                        </div>
+                    </div>
+                    <div style="max-height: 500px;overflow-y: auto;">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">Sr No</th>
+                                    <th ng-if="libCols &&  libCols.length" ng-repeat="cols in libCols"> <% cols.title %>
+                                    </th>
+                                    <th style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="libData &&  libData.length" ng-hide="(searchcat && !dt.showing)"
+                                    ng-repeat="dt in libData">
+                                    <td><% $index + 1 %></td>
+                                    <td ng-if="libCols &&  libCols.length" ng-repeat="cols in libCols">
+                                        <div
+                                            ng-if="!(['
+                            choice_a','choice_a','choice_b','choice_c','choice_d','choice_e','choice_f'].includes(cols.name))">
+                            <div class="img_list"
+                                ng-if="['vocabulary_image_urls','missing_word_image_urls','role_play_image_urls','qa_image_urls','extrawords_image_urls','englishword_image_urls','englishsentence_image_urls'].includes(cols.name)">
+                                <div ng-if="dt[cols.name]">
+                                    <img src="<% showImg(dt[cols.name]) %>" />
+                                </div>
+                                <span ng-if="!dt[cols.name]">-</span>
+                            </div>
+                            <div
+                                ng-if="!(['vocabulary_image_urls','missing_word_image_urls','role_play_image_urls','qa_image_urls','extrawords_image_urls','englishword_image_urls','englishsentence_image_urls'].includes(cols.name))">
+                                <% dt[cols.name] || '-' %>
+                            </div>
+                </div>
+                <div
+                    ng-if="['choice_a','choice_a','choice_b','choice_c','choice_d','choice_e','choice_f'].includes(cols.name)">
+                    <span ng-if="dt[cols.name] && dt[cols.name].value" class="">
+                        <i class="text-success fa fa-check" ng-if="dt[cols.name].type"></i>
+                        <% dt[cols.name].value %>
+                    </span>
+                    <span ng-if="!(dt[cols.name] && dt[cols.name].value)">-</span>
+                </div>
+
+
+                </td>
+                <td style="padding:5px">
+                    <a ng-click="addLibRow($index)" style="padding: 2px 8px;font-size: 26px;line-height: 24px;"
+                        class="btn btn-sm text-white btn-primary btn_delete">+</a>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" ng-click="selectAllLib()" class="select_all_lib btn btn-primary">Select All</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

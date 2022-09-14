@@ -1,0 +1,71 @@
+<div class="modal" id="addLib" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <% libType+' : '+ libTitle %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-2 input-group-sm" style="width: 40%;margin-left: 60%;">
+                    <input type="text" class="form-control" ng-model="searchcat" ng-change="searchcatData()"
+                        id="inlineFormInputGroup" placeholder="Search">
+                    <div class="input-group-append">
+                        <div class="input-group-text"> <i class="fa fa-search"></i> </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Sr No</th>
+                            <th ng-if="libCols &&  libCols.length" ng-repeat="cols in libCols"> <% cols.title %> </th>
+                            <th style="width: 50px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="libData &&  libData.length" ng-repeat="dt in libData">
+                            <td><% $index + 1 %></td>
+                            <td ng-if="libCols &&  libCols.length" ng-repeat="cols in libCols">
+                                <% val.showing ? ' y' :'n' %>
+                        <div
+                            ng-if="!(['choice_a','choice_b','choice_c','choice_d','choice_e','choice_f'].includes(cols.name))">
+                            <div class="img_list"
+                                ng-if="['vocabulary_image_urls','missing_word_image_urls','role_play_image_urls','qa_image_urls','extrawords_image_urls','englishword_image_urls','englishsentence_image_urls'].includes(cols.name)">
+                                <div ng-if="dt[cols.name]">
+                                    <img src="<% showImg(dt[cols.name]) %>" />
+                                </div>
+                                <span ng-if="!dt[cols.name]">-</span>
+                            </div>
+                            <div
+                                ng-if="!(['vocabulary_image_urls','missing_word_image_urls','role_play_image_urls','qa_image_urls','extrawords_image_urls','englishword_image_urls','englishsentence_image_urls'].includes(cols.name))">
+                                <% dt[cols.name] || '-' %>
+                            </div>
+                        </div>
+                        <div
+                            ng-if="['choice_a','choice_b','choice_c','choice_d','choice_e','choice_f'].includes(cols.name)">
+                            <span ng-if="dt[cols.name] && dt[cols.name].value" class="">
+                                <i class="text-success fa fa-check" ng-if="dt[cols.name].type"></i>
+                                <% dt[cols.name].value %>
+                            </span>
+                            <span ng-if="!(dt[cols.name] && dt[cols.name].value)">-</span>
+                        </div>
+
+
+                        </td>
+                        <td style="padding:5px">
+                            <a ng-click="addLibRow($index)" style="padding: 2px 8px;font-size: 26px;line-height: 24px;"
+                                class="btn btn-sm text-white btn-primary btn_delete">+</a>
+                        </td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

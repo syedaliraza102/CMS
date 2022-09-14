@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-2 text-right"><a ng-click="addPackageData(frTypes.MC)"
+                    class="btn btn-sm text-white btn-primary mr-2">
+                    Add Sentence And Extra Words
+                </a></div>
+        </div> -->
+        <div class="row">
+            <div class="col-md-12 mb-2 cat_list">
+                <!-- <a ng-if="catList && catList.mc && catList.mc.length" ng-repeat="cat in catList.mc"><% cat.title %>
+                    (<% cat.list.length %>)</a> -->
+                <a ng-if="catList && catList.mc && catList.mc.length && cat.list && cat.list.length"
+                    ng-repeat="cat in catList.mc" ng-click="showLib('mc',cat)">
+                    <% cat.title %>
+                        (<% cat.list.length %>)
+                </a>
+            </div>
+        </div>
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 80px;">Sr NO</th>
+                    <th style="width: 60%;">Choices (Selct checkbox to make option as correct)
+                    </th>
+                    <th>Type</th>
+                    <th class="text-right" style="width: 100px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.MC)" class="btn btn-sm text-white btn-primary">
+                            Add Multiple Choices
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="formData && formData.mc && formData.mc.length" ng-repeat="mc in formData.mc">
+                    <td class="index_col">
+                        <div>
+                            <span class="btn btn-primary bg-dark border-dark">
+                                <% $index + 1 %>
+                            </span>
+                        </div>
+                        <a ng-if="!$first" ng-click="arraymove(formData.mc,$index,$index - 1)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+
+                            <i class="fa fa-arrow-circle-up  "> </i>
+                        </a>
+                        <a ng-if="!$last" ng-click="arraymove(formData.mc,$index,$index + 1)"
+                            class="btn btn-sm text-white btn-danger cus_btn">
+                            <i class="fa fa-arrow-circle-down  "> </i>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="form-group mb-1">
+                            <input type="hidden" name="multiple_choice_id[<% $index %>]"
+                                value="<% mc.multiple_choice_id %>">
+                            <input type="text" name="choice_question[<% $index %>]" ng-model="mc.choice_question"
+                                class="form-control form-control-sm required " id="choice_question_<% $index %>"
+                                placeholder="Enter English Question">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-1" ng-repeat="mctyp in mcTypes">
+                                <!-- <div class="input-group input-group-sm" ng-show="$index < 3 || mc.option_type == '6'">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" ng-model="mctyp" class="custom-control-input"
+                                                    id="chbox_choice_<% mctyp %>_<% $parent.$index %>">
+                                                <label class="custom-control-label"
+                                                    for="chbox_choice_<% mctyp %>_<% $parent.$index %>"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="choice_<% mctyp %>[<% $parent.$index %>]"
+                                        class="form-control form-control-sm" value="<% mc['choice_'+mctyp] || '' %>"
+                                        ng-class="$index < 3 || mc.option_type == '6' ? 'required' : ''"
+                                        id="choice_<% mctyp %>_<% $parent.$index %>" placeholder="Choice <% mctyp %>">
+
+                                </div> -->
+
+                                <div class="input-group input-group-sm" ng-show="$index < 3 || mc.option_type == '6'">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox"
+                                                    name="choice_<% mctyp %>_ck[<% $parent.$index %>]"
+                                                    ng-model="mc['choice_'+mctyp].type" class="custom-control-input"
+                                                    id="chbox_choice_<% mctyp %>_<% $parent.$index %>">
+                                                <label class="custom-control-label"
+                                                    for="chbox_choice_<% mctyp %>_<% $parent.$index %>"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="choice_<% mctyp %>[<% $parent.$index %>]"
+                                        class="form-control form-control-sm" ng-model="mc['choice_'+mctyp].value"
+                                        ng-class="$index < 3 || mc.option_type == '6' ? 'required' : ''"
+                                        id="choice_<% mctyp %>_<% $parent.$index %>" placeholder="Choice <% mctyp %>">
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <select class="custom-select custom-select-sm mb-3" ng-model="mc.option_type">
+                            <option value="3" selected>3 Options</option>
+                            <option value="6">6 Options</option>
+                        </select>
+                        <input type="hidden" name="option_type[<% $index %>]" value="<% mc.option_type %>">
+                    </td>
+
+                    <td class="text-right">
+
+                        <a ng-click="cloneRowAtIndex(formData.mc,$index)"
+                            class="btn btn-sm text-white btn-success cus_btn">
+                            <i class="fa fa-clone  "> </i>
+                        </a>
+                        <a ng-click="addRowAtIndex(formData.mc,$index)"
+                            class="btn btn-sm text-white btn-primary cus_btn">
+                            <i class="fa fa-plus  "> </i>
+                        </a>
+                        <a ng-click="deletePackageData(frTypes.MC,$index)"
+                            class="btn btn-sm text-white btn-danger cus_btn btn_delete">
+                            <i class="fa fa-trash  "> </i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- <tr ng-if="!(formData && formData.mc && formData.mc.length)">
+                    <td colspan="5"> No Record found </td>
+                </tr> -->
+                <!-- <tr ng-if="!(formData && formData.mc && formData.mc.length && formData.mc.length >= 8)">
+                    <td colspan="5"> <label style="color: red;
+                    font-weight: 700;"> Please add atleast 8 Records </label> </td>
+                </tr> -->
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a ng-click="addPackageData(frTypes.MC)" class="btn btn-sm text-white btn-primary">
+                            Add Multiple Choices
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
